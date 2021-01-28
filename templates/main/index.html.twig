@@ -20,7 +20,7 @@
                         <h3>Ten miesiąc:</h3>
 
                         <div class="m-6">
-                            chart
+                            <canvas id="monthChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -62,5 +62,28 @@
                 </div>
             </div>
         </div>
+        <!-- {{ user.getUserName()|json_encode()|raw }} -->
     </div>
+{% endblock %}
+{% block javascripts %}
+    <!-- Charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script>
+        let monthChart = document.getElementById('monthChart').getContext('2d');
+        let chart = new Chart(monthChart, {
+            type:'doughnut',
+            data:{
+                labels:['Plock', 'Warszawa', 'Poznan'],
+                datasets:[{
+                    label:'ess',
+                    data:[
+                        120000,
+                        2000000,
+                        500000
+                    ]
+                }]
+            },
+            options:{}
+        });
+    </script>
 {% endblock %}
