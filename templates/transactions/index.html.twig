@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Your transactions{% endblock %}
+
+{% block sidemenu %}
+    <a href="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-outline-primary"><span class="material-icons">add</span>Add Expense</a>
+    <hr>
+    <a href="{{ path('main') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">list</span>Home</a>
+    <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-primary text-left"><b><span class="material-icons mr-1">shopping_cart</span>Transactions</b></a>
+    <a href="{{ path('summary', {'year' : 'NOW'|date('Y'), 'month' : 'NOW'|date('m')}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Summary</a>
+{% endblock %}
+
+{% block body %}
+    <div class="">
+        <table class="table table-striped table-hover table-bordered table-sm">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">data</th>
+                <th scope="col">tytuł</th>
+                <th scope="col">kategoria</th>
+                <th scope="col">odbiorca</th>
+                <th scope="col">kwota</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.title }}</td>
+                <td>{{ transaction.category }}</td>
+                <td>{{ transaction.recipient }}</td>
+                <td>{{ transaction.amount }}</td>
+            </tr>
+            {% endfor %}
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>total</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

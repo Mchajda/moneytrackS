@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Main Page{% endblock %}
+
+{% block sidemenu %}
+    <a href="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-outline-primary"><span class="material-icons">add</span>Add Expense</a>
+    <hr>
+    <a href="{{ path('main') }}" class="btn btn-block btn-primary text-left"><b><span class="material-icons mr-1">list</span>Home</b></a>
+    <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">shopping_cart</span>Transactions</a>
+    <a href="{{ path('summary', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Summary</a>
+{% endblock %}
+
+{% block body %}
+    <h2> Witaj {{ user.getUsername() }}<small>, stan twojego konta to: {{ user.getBalance() }} zł</small></h2>
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body py-4">
+                    <div style="position: relative; height:50vh; width:100%">
+                        <h3>Ten miesiąc:</h3>
+
+                        <div class="m-6">
+                            chart
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="card" style="border: 0px;">
+                <div class="card-body bg-light" >
+                    <h3>Twoje ostatnie transakcje</h3>
+                    {% for expense in expenses %}
+                    <div class="card my-2">
+                        <div class="card-body pt-2 pb-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <div class="border rounded-circle p-2">
+                                        <a href="#">
+                                            <img src="/assets/icons/{{ expense.getCategory() }}.svg" class="img-fluid" style="width: 36px; height: 36px;">
+                                        </a>
+                                    </div>
+                                    <div class="pl-3">
+                                        <div class="d-flex flex-column">
+                                            <div class=""><b>{{ expense.getTitle() }}</b></div>
+                                            <div class=""><small>{{ expense.getDate() }}</small></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    {% if expense.getDirection() == "income" %}
+                                    <span class="text-success">+{{ expense.getAmount() }} PLN</span>
+                                    {% else %}
+                                    <span class="text-danger">-{{ expense.getAmount() }} PLN</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

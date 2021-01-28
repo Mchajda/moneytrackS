@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ExpensesController!{% endblock %}
+
+{% block sidemenu %}
+    <a href="#" class="btn btn-block btn-primary"><b><span class="material-icons">add</span>Add Expense</b></a>
+    <hr>
+    <a href="{{ path('main') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">list</span>Home</a>
+    <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">shopping_cart</span>Transactions</a>
+    <a href="{{ path('summary', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Summary</a>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <h2>Add expense</h2> || your balance {{ balance }}
+            <div class="card">
+                <div class="card-body">
+
+                    <form action="{{ path('add_expense', {'year' : current_year, 'month' : current_month}) }}" enctype="multipart/form-data" method="post">
+
+                        <div class="form-group row">
+                            <label for="title" class="col-sm-2 col-form-label">Title</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="title">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="date" class="col-sm-2 col-form-label">Date</label>
+                            <div class="col-sm-10">
+                                <input type="date" class="form-control" name="date" value="{{ current_year }}-{{ current_month }}-{{ current_day }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="category" class="col-sm-2 col-form-label">Category</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="category" name="category">
+                                    {% for cat in categories %}
+                                        <option>{{ cat.getCategoryName() }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="recipient" class="col-sm-2 col-form-label">Recipient</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="recipient" value="other">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="amount" class="col-sm-2 col-form-label">Amount</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" name="amount" step="0.01">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="direction" class="col-sm-2 col-form-label">Direction</label>
+                            <div class="form-check form-check-inline pl-3">
+                                <input class="form-check-input" type="radio" name="direction" id="expense" value="expense" checked>
+                                <label class="form-check-label" for="expense">Expense</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="direction" id="income" value="income">
+                                <label class="form-check-label" for="income">Income</label>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary btn-block">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <div class="card" style="border: 0px;">
+                <div class="card-body bg-light" >
+                    <h3>Twoje ostatnie transakcje</h3>
+                    {% for expense in expenses %}
+                        <div class="card my-2">
+                            <div class="card-body pt-2 pb-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <div class="border rounded-circle p-2">
+                                            <a href="#">
+                                                <img src="/assets/icons/{{ expense.getCategory() }}.svg" class="img-fluid" style="width: 36px; height: 36px;">
+                                            </a>
+                                        </div>
+                                        <div class="pl-3">
+                                            <div class="d-flex flex-column">
+                                                <div class=""><b>{{ expense.getTitle() }}</b></div>
+                                                <div class=""><small>{{ expense.getDate() }}</small></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        {% if expense.getDirection() == "income" %}
+                                            <span class="text-success">+{{ expense.getAmount() }} PLN</span>
+                                        {% else %}
+                                            <span class="text-danger">-{{ expense.getAmount() }} PLN</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
