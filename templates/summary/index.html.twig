@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SummaryController!{% endblock %}
+{% block title %}Summary {{ current_month }}/{{ current_year }}{% endblock %}
 
 {% block sidemenu %}
     <a href="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-outline-primary"><span class="material-icons">add</span>Add Expense</a>
@@ -11,5 +11,66 @@
 {% endblock %}
 
 {% block body %}
+    <h2>Podsumowanie twoich wydatków miesiąca.</h2>
+    <hr>
 
+    <div class="row">
+        <div class="col-3">
+            <h4>poprzedni miesiąc</h4>
+            {% for category in categories %}
+                <div class="d-flex justify-content-between">
+                    <div><b><a class="text-dark" href="#">{{ category }}</a></b>:</div>
+                    <div>{{ previous_month_expenses[category] }} zł</div>
+                </div>
+                <hr>
+            {% endfor %}
+            <div class="d-flex justify-content-between">
+                <div>total:</div>
+                <div></div>
+            </div>
+        </div>
+        <div class="col-9">
+            <h4>ten miesiąc</h4>
+            {% for category in categories %}
+                <div class="d-flex justify-content-between">
+                    <div><b><a class="text-dark" href="#">{{ category }}</a></b>:</div>
+                    <div>{{ this_month_expenses[category] }} zł</div>
+                </div>
+                <hr>
+            {% endfor %}
+            <div class="d-flex justify-content-between">
+                <div>total:</div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4" style="width: 40rem;">
+        <h3>Monthly expenses</h3>
+        <canvas id="thisMonthChart"></canvas>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- Charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script>
+        let thisMonthChart = document.getElementById('thisMonthChart').getContext('2d');
+        let chart = new Chart(thisMonthChart, {
+            type:'doughnut',
+            data:{
+                labels:{{ categories_for_chart|json_encode()|raw }},
+                datasets:[{
+                    label:'',
+                    data:{{ expenses_for_chart|json_encode()|raw }},
+                    backgroundColor: {{ categories_colors|json_encode()|raw }}
+                }]
+            },
+            options:{
+                legend: {
+                    display: true
+                }
+            }
+        });
+    </script>
 {% endblock %}

@@ -23,8 +23,14 @@ class ExpensesProvider implements ExpensesProviderInterface
 
     public function getAllOrderedByCategories($user_id, $year, $month, $categories)
     {
+        if($month == 0) //zabezpieczenie w przypadku previous month przypadku grudzien-styczen
+        {
+            $month = 12;
+            $year -= 1;
+        }
+
         $this_month_expenses = [];
-        $expenses = $this->repository->getForDate($user_id, $year, $month);
+        $expenses = $this->getAll($user_id, $year, $month);
 
         foreach($categories as $cat)
         {
