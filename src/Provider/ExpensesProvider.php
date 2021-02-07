@@ -21,6 +21,22 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $this->repository->getForDate($user_id, $year, $month);
     }
 
+    public function getAllOrderedByCategories($user_id, $year, $month, $categories)
+    {
+        $this_month_expenses = [];
+        $expenses = $this->repository->getForDate($user_id, $year, $month);
+
+        foreach($categories as $cat)
+        {
+            $this_month_expenses[$cat->getCategoryName()] = 0;
+            foreach($expenses as $expense){
+                if($expense->getCategory() == $cat->getCategoryName() && $expense->getDirection() == "expense")
+                    $this_month_expenses[$cat->getCategoryName()] += $expense->getAmount();
+            }
+        }
+        return $this_month_expenses;
+    }
+
     public function getLast($user_id, $num)
     {
         return $this->repository->getLast($user_id, $num);

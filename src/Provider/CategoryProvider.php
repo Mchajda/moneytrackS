@@ -20,4 +20,34 @@ class CategoryProvider implements CategoryProviderInterface
     {
         return $this->repository->findAll();
     }
+
+    public function getAllCategoriesNames()
+    {
+        $categories_names = [];
+        $i=0;
+        $categories = $this->repository->findAll();
+
+        foreach($categories as $cat)
+        {
+            $categories_names[$i] = $cat->getCategoryName();
+            $i++;
+        }
+
+        return $categories_names;
+    }
+
+    public function getCategoriesColors()
+    {
+        $categories_colors = [];
+        $i=0;
+        $categories = $this->repository->findAll();
+
+        foreach($categories as $cat)
+        {
+            $categories_colors[$i] = $cat->getCategoryColor();
+            $i++;
+        }
+
+        return $categories_colors;
+    }
 }

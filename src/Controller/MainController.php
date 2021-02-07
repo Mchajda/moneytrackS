@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Provider\Interfaces\CategoryProviderInterface;
 use App\Provider\Interfaces\ExpensesProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,10 +11,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
     private $expensesProvider;
+    private $categoryProvider;
 
-    public function __construct(ExpensesProviderInterface $expensesProvider)
+    public function __construct(ExpensesProviderInterface $expensesProvider, CategoryProviderInterface $categoryProvider)
     {
         $this->expensesProvider = $expensesProvider;
+        $this->categoryProvider = $categoryProvider;
     }
 
     /**
@@ -36,10 +39,15 @@ class MainController extends AbstractController
         $alert = "";
         $alert_class = "";
 
+        $this_month_expenses = array_values($this->expensesProvider->getAllOrderedByCategories($user->getId(), $current_year, $current_month, $this->categoryProvider->getAllCategories()));
+        $categories = $this->categoryProvider->getAllCategoriesNames();
+        $categories_colors = $this->categoryProvider->getCategoriesColors();
+
         return $this->render('main/index.html.twig', [
-            'user' => $user,
+            'user' => $user, 'this_month_expenses' => $this_month_expenses,
             'expenses' => $this->expensesProvider->getLast($user->getId(),5),
             'current_year' => $current_year, 'current_month' => $current_month,
+            'expenses_for_chart' => $this_month_expenses, 'categories_for_chart' => $categories, 'categories_colors' => $categories_colors,
             'alert' => $alert, 'alert_class' => $alert_class,
         ]);
     }

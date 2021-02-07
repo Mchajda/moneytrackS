@@ -37,6 +37,11 @@ class Category
      */
     private $updated_at;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $category_color;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Category
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getCategoryColor(): ?string
+    {
+        return $this->category_color;
+    }
+
+    public function setCategoryColor(?string $category_color): self
+    {
+        $this->category_color = $category_color;
 
         return $this;
     }

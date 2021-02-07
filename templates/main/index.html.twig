@@ -73,17 +73,18 @@
         let chart = new Chart(monthChart, {
             type:'doughnut',
             data:{
-                labels:['Plock', 'Warszawa', 'Poznan'],
+                labels:{{ categories_for_chart|json_encode()|raw }},
                 datasets:[{
-                    label:'ess',
-                    data:[
-                        120000,
-                        2000000,
-                        500000
-                    ]
+                    label:'',
+                    data:{{ expenses_for_chart|json_encode()|raw }},
+                    backgroundColor: {{ categories_colors|json_encode()|raw }}
                 }]
             },
-            options:{}
+            options:{
+                legend: {
+                    display: false
+                }
+            }
         });
     </script>
 {% endblock %}
