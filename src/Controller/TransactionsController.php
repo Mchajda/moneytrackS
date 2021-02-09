@@ -28,7 +28,7 @@ class TransactionsController extends AbstractController
         return $this->render('transactions/index.html.twig', [
             'current_year' => $year, 'current_month' => $month,
             'alert' => $alert, 'alert_class' => $alert_class,
-            'transactions' => $this->expensesProvider->getAll($this->getUser()->getId(), $year, $month),
+            'transactions' => $this->expensesProvider->getAllForMonth($this->getUser()->getId(), $year, $month),
         ]);
     }
 }

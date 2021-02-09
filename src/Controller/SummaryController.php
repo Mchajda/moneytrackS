@@ -42,12 +42,16 @@ class SummaryController extends AbstractController
         $categories = $this->categoryProvider->getAllCategoriesNames();
         $categories_colors = $this->categoryProvider->getCategoriesColors();
 
+        $months = ['1' => 'styczeń', '2' => 'luty', '3' => 'marzec', '4' => 'kwiecień', '5' => 'maj', '6' => 'czerwiec', '7' => 'lipiec', '8' => 'sierpień', '9' => 'wrzesień', '10' => 'październik', '11' => 'listopad', '12' => 'grudzień'];
+        $monthly_expenses = $this->expensesProvider->getMonthlyExpenses($user->getId(), $current_year);
+
         return $this->render('summary/index.html.twig', [
             'current_year' => $year, 'current_month' => $month,
             'alert' => $alert, 'alert_class' => $alert_class,
             'categories' => $categories, 'this_month_expenses' => $this_month_expenses,
             'previous_month_expenses' => $previous_month_expenses,
             'categories_for_chart' => $categories, 'categories_colors' => $categories_colors, 'expenses_for_chart' => $this_month_expenses_for_chart,
+            'months' => array_values($months), 'monthly_expenses' => $monthly_expenses,
         ]);
     }
 }
