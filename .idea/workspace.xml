@@ -20,11 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fdc1689e-9703-4089-b978-f41600036152" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Provider/InflationProvider.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Provider/Interfaces/InflationProviderInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/moneytrackS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/moneytrackS.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Service/InflationService.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Service/Interfaces/InflationServiceInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/InflationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/InflationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Provider/InflationProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Provider/InflationProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Provider/Interfaces/InflationProviderInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Provider/Interfaces/InflationProviderInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/expenses/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/expenses/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/inflation/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/inflation/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/summary/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/summary/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/transactions/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/transactions/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,6 +147,8 @@
       <updated>1611836189360</updated>
       <workItem from="1611836190424" duration="927000" />
       <workItem from="1613163657409" duration="650000" />
+      <workItem from="1613218669707" duration="29000" />
+      <workItem from="1613220861016" duration="4008000" />
     </task>
     <servers />
   </component>
@@ -157,11 +165,16 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="535" y="238" key="NewPhpClassDialog" timestamp="1613163987765">
+    <state x="535" y="238" key="NewPhpClassDialog" timestamp="1613234272344">
       <screen x="0" y="25" width="1680" height="966" />
     </state>
-    <state x="535" y="238" key="NewPhpClassDialog/0.25.1680.966@0.25.1680.966" timestamp="1613163987765" />
+    <state x="535" y="238" key="NewPhpClassDialog/0.25.1680.966@0.25.1680.966" timestamp="1613234272344" />
+    <state x="504" y="237" width="670" height="676" key="search.everywhere.popup" timestamp="1613234157939">
+      <screen x="0" y="25" width="1680" height="966" />
+    </state>
+    <state x="504" y="237" width="670" height="676" key="search.everywhere.popup/0.25.1680.966@0.25.1680.966" timestamp="1613234157939" />
   </component>
 </project>

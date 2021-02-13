@@ -20,4 +20,32 @@ class InflationProvider implements InflationProviderInterface
     {
         return $this->repository->findAll();
     }
+
+    public function getAllValues()
+    {
+        $values = [];
+        $i=0;
+
+        foreach($this->getAll() as $inflation)
+        {
+            $values[$i] = $inflation->getValue();
+            $i++;
+        }
+
+        return $values;
+    }
+
+    public function getAllYears()
+    {
+        $years = [];
+        $i=0;
+
+        foreach($this->getAll() as $inflation)
+        {
+            $years[$i] = $inflation->getYear();
+            $i++;
+        }
+
+        return $years;
+    }
 }
