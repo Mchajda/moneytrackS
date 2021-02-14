@@ -3,12 +3,13 @@
 {% block title %}Hello ExpensesController!{% endblock %}
 
 {% block sidemenu %}
-    <a href="#" class="btn btn-block btn-primary"><b><span class="material-icons">add</span>Add Expense</b></a>
+    <a href="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-primary"><b><span class="material-icons">add</span>Add Expense</b></a>
     <hr>
     <a href="{{ path('main') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">list</span>Home</a>
     <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">shopping_cart</span>Transactions</a>
     <a href="{{ path('summary', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Summary</a>
     <a href="{{ path('inflation') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Inflation</a>
+    <a href="{{ path('crypto') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Cryptocurrencies</a>
 {% endblock %}
 
 {% block body %}

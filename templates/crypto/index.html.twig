@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cryptocurrencies{% endblock %}
+
+{% block sidemenu %}
+    <a href="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-outline-primary"><span class="material-icons">add</span>Add Expense</a>
+    <hr>
+    <a href="{{ path('main') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">list</span>Home</a>
+    <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">shopping_cart</span>Transactions</a>
+    <a href="{{ path('summary', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Summary</a>
+    <a href="{{ path('inflation') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Inflation</a>
+    <a href="{{ path('crypto') }}" class="btn btn-block btn-primary text-left"><b><span class="material-icons mr-1">auto_graph</span>Cryptocurrencies</b></a>
+{% endblock %}
+
+{% block body %}
+    <h4>Twój budżet w kryptowalutach</h4>
+
+    <table class="table table-striped table-sm table-hover">
+        <thead class="thead-dark">
+            <th>Nazwa</th>
+            <th>szt. / PLN</th>
+            <th>przeliczenie na twój budżet</th>
+        </thead>
+        <tbody>
+            {% for key, val in crypto %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ (val*dollar_value)|round(2, 'floor') }}</td>
+                    <td>{{ (balance/(val*dollar_value))|round(2, 'floor') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

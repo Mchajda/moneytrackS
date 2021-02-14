@@ -9,6 +9,7 @@
     <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-primary text-left"><b><span class="material-icons mr-1">shopping_cart</span>Transactions</b></a>
     <a href="{{ path('summary', {'year' : 'NOW'|date('Y'), 'month' : 'NOW'|date('m')}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Summary</a>
     <a href="{{ path('inflation') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Inflation</a>
+    <a href="{{ path('crypto') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Cryptocurrencies</a>
 {% endblock %}
 
 {% block body %}
