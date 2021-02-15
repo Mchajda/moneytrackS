@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use App\Entity\Expense;
 use App\Service\Interfaces\ExportServiceInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;

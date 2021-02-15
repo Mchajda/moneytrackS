@@ -23,17 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fdc1689e-9703-4089-b978-f41600036152" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Service/ExportService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Service/Interfaces/ExportServiceInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/moneytrackS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/moneytrackS.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/TransactionsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/TransactionsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/transactions/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/transactions/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/ExportService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ExportService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +147,7 @@
       <workItem from="1613237054823" duration="19000" />
       <workItem from="1613326713989" duration="3497000" />
       <workItem from="1613389842710" duration="371000" />
-      <workItem from="1613400966893" duration="5217000" />
+      <workItem from="1613400966893" duration="6437000" />
     </task>
     <servers />
   </component>
@@ -176,6 +167,10 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="528" y="248" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1613410082130">
+      <screen x="0" y="25" width="1680" height="966" />
+    </state>
+    <state x="528" y="248" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.25.1680.966@0.25.1680.966" timestamp="1613410082130" />
     <state x="578" y="267" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1613408203158">
       <screen x="0" y="25" width="1680" height="966" />
     </state>
