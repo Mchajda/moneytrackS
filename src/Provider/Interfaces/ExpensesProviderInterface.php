@@ -12,4 +12,7 @@ interface ExpensesProviderInterface
     public function getAllOrderedByCategories($user_id, $year, $month, $categories);
     public function getLast($user_id, $num);
     public function getMonthlyExpenses($user_id, $year);
+
+    public function getForPredictions();
+    public function countAverageValues($catValues, $categories);
 }

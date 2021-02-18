@@ -77,4 +77,25 @@ class ExpensesProvider implements ExpensesProviderInterface
 
         return $monthly_expenses;
     }
+
+    public function getForPredictions()
+    {
+        return $this->repository->forPredictions();
+    }
+
+    public function countAverageValues($catValues, $categories)
+    {
+        $avgs = []; $i=1;
+        foreach ($categories as $cat) {
+            $avgs[$cat->getCategoryName()] = 0;
+            foreach ($catValues as $catValue){
+                if($catValue['category'] == $cat->getCategoryName()) {
+                    $avgs[$cat->getCategoryName()] += $catValue['suma'];
+                    $i++;
+                }
+                $avgs[$cat->getCategoryName()] = $avgs[$cat->getCategoryName()]/$i; $i=1;
+            }
+        }
+        return $avgs;
+    }
 }

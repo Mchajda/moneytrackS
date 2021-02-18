@@ -94,6 +94,20 @@ class ExpenseRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @return Expense[] Returns an array of Expense objects
+     */
+    public function forPredictions()
+    {
+        $conn = $this->getEntityManager()
+            ->getConnection();
+
+        $sql = 'SELECT EXTRACT(MONTH FROM date) as miesiac, category, sum(amount) as suma FROM expense WHERE direction="expense" GROUP BY EXTRACT(MONTH FROM date), category';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAllAssociative();
+    }
+
 
     // /**
     //  * @return Expense[] Returns an array of Expense objects

@@ -55,7 +55,7 @@ class ExpensesController extends AbstractController
     /**
      * @Route("/store_expense/{year}/{month}", name="add_expense")
      */
-    public function store(Request $request): Response
+    public function store(Request $request, $year, $month): Response
     {
         if($request->isMethod("POST"))
         {
@@ -66,9 +66,23 @@ class ExpensesController extends AbstractController
                 $this->getUser()->setBalance($this->getUser()->getBalance() - $request->request->get('amount'));
             else $this->getUser()->setBalance($this->getUser()->getBalance() + $request->request->get('amount'));
 
-            $alert = "Expense ".$expense->getTitle()." added successfully";
-            $alert_class = "alert-success";
 
+
+            //predictions
+            $catValues = $this->expensesProvider->getForPredictions();
+            $categories = $this->categoryProvider->getAllCategories();
+
+            $avgs = $this->expensesProvider->countAverageValues($catValues, $categories);
+            $this_month_spendings = $this->expensesProvider->getAllOrderedByCategories($this->getUser()->getId(), $year, $month, $categories);
+
+            if($this_month_spendings[$expense->getCategory()] + $expense->getAmount() > $avgs[$expense->getCategory()]){
+                $alert = "Expense ".$expense->getTitle()." added successfully, but it exceed your monthly average in this category!";
+                $alert_class = "alert-warning";
+            }else{
+                $alert = "Expense ".$expense->getTitle()." added successfully!";
+                $alert_class = "alert-success";
+            }
+            //end of predictions
         }
         else
         {
