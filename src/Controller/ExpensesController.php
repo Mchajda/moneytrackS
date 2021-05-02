@@ -6,6 +6,7 @@ use App\Provider\Interfaces\CategoryProviderInterface;
 use App\Provider\Interfaces\ExpensesProviderInterface;
 use App\RequestProcessor\Interfaces\ExpenseRequestProcessorInterface;
 use App\Service\Interfaces\ExpensesServiceInterface;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +39,7 @@ class ExpensesController extends AbstractController
     {
         $alert = (string)$request->query->get('alert');
         $alert_class = (string)$request->query->get('alert_class');
+        $previous_date = (string)$request->query->get('prev_date');
 
         $current_year = date('Y');
         $current_month = date('m');
@@ -49,6 +51,7 @@ class ExpensesController extends AbstractController
             'current_year' => $current_year, 'current_month' => $current_month, 'current_day' => $current_day,
             'categories' => $this->categoryProvider->getAllCategories(),
             'alert' => $alert, 'alert_class' => $alert_class,
+            'prev_date' => $previous_date,
         ]);
     }
 
@@ -60,13 +63,12 @@ class ExpensesController extends AbstractController
         if($request->isMethod("POST"))
         {
             $expense = $this->requestProcessor->create($request, $this->getUser());
+            $previous_date = $expense->getDate();
             $this->expenseService->create($expense);
 
             if($request->request->get('direction') == "expense")
                 $this->getUser()->setBalance($this->getUser()->getBalance() - $request->request->get('amount'));
             else $this->getUser()->setBalance($this->getUser()->getBalance() + $request->request->get('amount'));
-
-
 
             //predictions
             $catValues = $this->expensesProvider->getForPredictions();
@@ -94,6 +96,9 @@ class ExpensesController extends AbstractController
         $current_month = date('m');
         $current_day = date('d');
 
-        return $this->redirectToRoute('add_expense_form', ['year' => $current_year, 'month' => $current_month, 'day' => $current_day, 'alert' => $alert, 'alert_class' => $alert_class]);
+        return $this->redirectToRoute('add_expense_form', [
+            'year' => $current_year, 'month' => $current_month,
+            'day' => $current_day, 'prev_date' => $previous_date,
+            'alert' => $alert, 'alert_class' => $alert_class]);
     }
 }
