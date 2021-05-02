@@ -13,12 +13,12 @@
 {% endblock %}
 
 {% block body %}
-    <h2>Podsumowanie twoich wydatków miesiąca.</h2>
+    <h2>Summary of your monthly spendings</h2>
     <hr>
 
     <div class="row">
         <div class="col-3">
-            <h4>poprzedni miesiąc</h4>
+            <h4>previous month</h4>
             {% for category in categories %}
                 <div class="d-flex justify-content-between">
                     <div><b><a class="text-dark" href="#">{{ category }}</a></b>:</div>
@@ -27,12 +27,12 @@
                 <hr>
             {% endfor %}
             <div class="d-flex justify-content-between">
-                <div>total:</div>
+                <!--<div>total:</div>-->
                 <div></div>
             </div>
         </div>
         <div class="col-9">
-            <h4>ten miesiąc</h4>
+            <h4>this month</h4>
             {% for category in categories %}
                 <div class="d-flex justify-content-between">
                     <div><b><a class="text-dark" href="#">{{ category }}</a></b>:</div>
@@ -41,7 +41,7 @@
                 <hr>
             {% endfor %}
             <div class="d-flex justify-content-between">
-                <div>total:</div>
+                <!--<div>total:</div>-->
                 <div></div>
             </div>
         </div>
@@ -49,7 +49,7 @@
 
     <div class="d-flex justify-content-center">
         <div>
-            <h3>Monthly expenses</h3>
+            <h3>This month expenses</h3>
             <div class="mt-4" style="width: 60rem;">
                 <canvas id="thisMonthChart"></canvas>
             </div>
@@ -76,8 +76,10 @@
             data:{
                 labels:{{ categories_for_chart|json_encode()|raw }},
                 datasets:[{
-                    label:'',
                     data:{{ expenses_for_chart|json_encode()|raw }},
+                    backgroundColor: {{ categories_colors|json_encode()|raw }}
+                },{
+                    data:{{ averages|json_encode()|raw }},
                     backgroundColor: {{ categories_colors|json_encode()|raw }}
                 }]
             },
@@ -100,6 +102,7 @@
                 }]
             },
             options:{
+                responsive: true,
                 legend: {
                     display: false
                 }

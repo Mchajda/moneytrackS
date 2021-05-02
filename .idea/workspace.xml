@@ -24,7 +24,14 @@
   <component name="ChangeListManager">
     <list default="true" id="fdc1689e-9703-4089-b978-f41600036152" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ExportService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ExportService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SummaryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SummaryController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/crypto/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/crypto/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/expenses/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/expenses/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/inflation/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/inflation/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/summary/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/summary/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/transactions/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/transactions/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,6 +155,13 @@
       <workItem from="1613326713989" duration="3497000" />
       <workItem from="1613389842710" duration="371000" />
       <workItem from="1613400966893" duration="6437000" />
+      <workItem from="1613552678884" duration="725000" />
+      <workItem from="1613589703636" duration="4736000" />
+      <workItem from="1613641089565" duration="31000" />
+      <workItem from="1613645754510" duration="3621000" />
+      <workItem from="1613736484978" duration="83000" />
+      <workItem from="1613988666177" duration="2883000" />
+      <workItem from="1614240819128" duration="138000" />
     </task>
     <servers />
   </component>
@@ -179,9 +193,9 @@
       <screen x="0" y="25" width="1680" height="966" />
     </state>
     <state x="535" y="238" key="NewPhpClassDialog/0.25.1680.966@0.25.1680.966" timestamp="1613408141582" />
-    <state x="504" y="237" width="670" height="676" key="search.everywhere.popup" timestamp="1613406586922">
+    <state x="504" y="237" width="670" height="676" key="search.everywhere.popup" timestamp="1613991915022">
       <screen x="0" y="25" width="1680" height="966" />
     </state>
-    <state x="504" y="237" width="670" height="676" key="search.everywhere.popup/0.25.1680.966@0.25.1680.966" timestamp="1613406586922" />
+    <state x="504" y="237" width="670" height="676" key="search.everywhere.popup/0.25.1680.966@0.25.1680.966" timestamp="1613991915022" />
   </component>
 </project>
