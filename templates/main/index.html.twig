@@ -3,42 +3,31 @@
 {% block title %}Main Page{% endblock %}
 
 {% block sidemenu %}
-    <a href="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-outline-primary"><span class="material-icons">add</span>Add Expense</a>
+    <a href="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}"
+       class="btn btn-block btn-outline-primary"><span class="material-icons">add</span>Add Expense</a>
     <hr>
-    <a href="{{ path('main') }}" class="btn btn-block btn-primary text-left"><b><span class="material-icons mr-1">list</span>Home</b></a>
-    <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">shopping_cart</span>Transactions</a>
-    <a href="{{ path('summary', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Summary</a>
+    <a href="{{ path('main') }}" class="btn btn-block btn-primary text-left"><b><span
+                    class="material-icons mr-1">list</span>Home</b></a>
+    <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}"
+       class="btn btn-block btn-light text-left"><span class="material-icons mr-1">shopping_cart</span>Transactions</a>
+    <a href="{{ path('summary', {'year' : current_year, 'month' : current_month}) }}"
+       class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Summary</a>
 {% endblock %}
 
 {% block body %}
-    <h2> Witaj {{ user.getUsername() }}<small>, stan twojego konta to: {{ user.getBalance() }} zł</small></h2>
     <div class="row">
-        <div class="col-6">
-            <div class="card">
-                <div class="card-body py-4">
-                    <div style="position: relative; height:50vh; width:100%">
-                        <h3>Ten miesiąc:</h3>
-
-                        <div class="m-6">
-                            <canvas id="monthChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-6">
-            <div class="card" style="border: 0px;">
-                <div class="card-body bg-light" >
-                    <h3>Twoje ostatnie transakcje</h3>
-                    {% for expense in expenses %}
-                    <div class="card my-2">
+        <div class="col-lg-6 col-md-6 col-sm-12 mt-4">
+            <div class="card card-body bg-light pt-0">
+                <h3>Twoje ostatnie transakcje</h3>
+                {% for expense in expenses %}
+                    <div class="card shadow my-2">
                         <div class="card-body pt-2 pb-2">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
                                     <div class="border rounded-circle p-2">
                                         <a href="#">
-                                            <img src="/assets/icons/{{ expense.getCategory() }}.svg" class="img-fluid" style="width: 36px; height: 36px;">
+                                            <img src="/assets/icons/{{ expense.getCategory() }}.svg" class="img-fluid"
+                                                 style="width: 36px; height: 36px;">
                                         </a>
                                     </div>
                                     <div class="pl-3">
@@ -50,39 +39,53 @@
                                 </div>
                                 <div>
                                     {% if expense.getDirection() == "income" %}
-                                    <span class="text-success">+{{ expense.getAmount() }} PLN</span>
+                                        <span class="text-success">+{{ expense.getAmount() }} PLN</span>
                                     {% else %}
-                                    <span class="text-danger">-{{ expense.getAmount() }} PLN</span>
+                                        <span class="text-danger">-{{ expense.getAmount() }} PLN</span>
                                     {% endif %}
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
-                </div>
+                {% endfor %}
             </div>
         </div>
         <!-- {{ user.getUserName()|json_encode()|raw }} -->
+        <div class="col-lg-6 col-md-6 col-sm-12 mt-4">
+            <div class="card shadow">
+                <div class="card-body py-4">
+                    <div style="position: relative; height:40%; width:100%">
+                        <h3>Ten miesiąc:</h3>
+
+                        <div class="m-6">
+                            <canvas id="monthChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <!-- Charts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+            integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+            crossorigin="anonymous"></script>
     <script>
         let monthChart = document.getElementById('monthChart').getContext('2d');
         let chart = new Chart(monthChart, {
-            type:'doughnut',
-            data:{
+            type: 'doughnut',
+            data: {
                 labels:{{ categories_for_chart|json_encode()|raw }},
-                datasets:[{
-                    label:'',
+                datasets: [{
+                    label: '',
                     data:{{ expenses_for_chart|json_encode()|raw }},
                     backgroundColor: {{ categories_colors|json_encode()|raw }}
                 }]
             },
-            options:{
+            options: {
                 legend: {
                     display: false
                 }
