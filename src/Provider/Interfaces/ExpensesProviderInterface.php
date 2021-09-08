@@ -12,4 +12,6 @@ interface ExpensesProviderInterface
     public function getAllOrderedByCategories($user_id, $year, $month, $categories);
     public function getLast($user_id, $num);
     public function getMonthlyExpenses($user_id, $year);
+    public function getSumOfMonthExpenses($user_id, $year, $month): float;
+    public function getSumOfMonthIncomes($user_id, $year, $month): float;
 }

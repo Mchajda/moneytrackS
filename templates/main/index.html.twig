@@ -50,18 +50,13 @@
                 {% endfor %}
             </div>
         </div>
-        <!-- {{ user.getUserName()|json_encode()|raw }} -->
-        <div class="col-lg-6 col-md-6 col-sm-12 mt-4">
-            <div class="card shadow">
-                <div class="card-body py-4">
-                    <div style="position: relative; height:40%; width:100%">
-                        <h3>Ten miesiąc:</h3>
 
-                        <div class="m-6">
-                            <canvas id="monthChart"></canvas>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 mt-4">
+            <div class="card card-body py-4 shadow">
+                <h3>Ten miesiąc:</h3>
+                <canvas id="expensesVsIncomesChart" style="height: 20%"></canvas>
+                <hr>
+                <canvas id="monthChart" style="height: 40%"></canvas>
             </div>
         </div>
     </div>
@@ -70,9 +65,7 @@
 {% block javascripts %}
     {{ parent() }}
     <!-- Charts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
-            integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
-            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         let monthChart = document.getElementById('monthChart').getContext('2d');
         let chart = new Chart(monthChart, {
@@ -86,9 +79,55 @@
                 }]
             },
             options: {
-                legend: {
-                    display: false
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
                 }
+            }
+        });
+    </script>
+    <script>
+        const labels = ['Wydatki', "Przychody"];
+        const data = {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Dataset 1',
+                    data: {{ thisMonthSumOfExpenses }},
+                    borderColor: "blue",
+                    backgroundColor: "blue",
+                },
+                {
+                    label: 'Dataset 2',
+                    data: {{ thisMonthSumOfIncomes }},
+                    borderColor: "red",
+                    backgroundColor: "red",
+                }
+            ]
+        };
+
+        var ctx = document.getElementById('expensesVsIncomesChart').getContext('2d');
+        var expensesVsIncomesChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Wydatki', 'Przychody'],
+                datasets: [{
+                    label: 'Wydatki vs Przychody',
+                    data: [{{ thisMonthSumOfIncomes }}, {{ thisMonthSumOfExpenses }}],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
             }
         });
     </script>
