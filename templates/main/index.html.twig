@@ -54,9 +54,13 @@
         <div class="col-lg-6 col-md-6 col-sm-12 mt-4">
             <div class="card card-body py-4 shadow">
                 <h3>Ten miesiąc:</h3>
-                <canvas id="expensesVsIncomesChart" style="height: 20%"></canvas>
+                <div style="height: 10%">
+                    <canvas id="expensesVsIncomesChart"></canvas>
+                </div>
                 <hr>
-                <canvas id="monthChart" style="height: 40%"></canvas>
+                <div style="height: 30%">
+                    <canvas id="monthChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
@@ -79,6 +83,8 @@
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         display: false,
@@ -88,32 +94,15 @@
         });
     </script>
     <script>
-        const labels = ['Wydatki', "Przychody"];
-        const data = {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Dataset 1',
-                    data: {{ thisMonthSumOfExpenses }},
-                    borderColor: "blue",
-                    backgroundColor: "blue",
-                },
-                {
-                    label: 'Dataset 2',
-                    data: {{ thisMonthSumOfIncomes }},
-                    borderColor: "red",
-                    backgroundColor: "red",
-                }
-            ]
-        };
+        const labels = ['Przychody', "Wydatki"];
 
-        var ctx = document.getElementById('expensesVsIncomesChart').getContext('2d');
-        var expensesVsIncomesChart = new Chart(ctx, {
+        const ctx = document.getElementById('expensesVsIncomesChart').getContext('2d');
+        const expensesVsIncomesChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Wydatki', 'Przychody'],
+                labels: labels,
                 datasets: [{
-                    label: 'Wydatki vs Przychody',
+                    // label: 'Wydatki vs Przychody',
                     data: [{{ thisMonthSumOfIncomes }}, {{ thisMonthSumOfExpenses }}],
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.2)',
@@ -127,7 +116,14 @@
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 indexAxis: 'y',
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                }
             }
         });
     </script>
