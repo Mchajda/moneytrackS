@@ -32,7 +32,7 @@ class ExpensesController extends AbstractController
     }
 
     /**
-     * @Route("/add_expense/{year}/{month}", name="add_expense_form")
+     * @Route("/add-expense", name="add_expense_form")
      */
     public function index(Request $request): Response
     {
