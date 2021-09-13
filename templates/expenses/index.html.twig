@@ -60,7 +60,7 @@
                             <div class="col-sm-10">
                                 <select class="form-control expense-field" id="category" name="category">
                                     {% for cat in categories %}
-                                        <option>{{ cat.getCategoryName() }}</option>
+                                        <option value="{{ cat.getCategoryName() }}">{{ cat.getCategoryName() }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -145,11 +145,6 @@
                 [].forEach.call(expenseDivs, function(div) {
                     div.style.display = 'block';
                 });
-
-                const expenseInputs = document.querySelectorAll('.expense-field');
-                [].forEach.call(expenseInputs, function(input) {
-                    input.disabled = '';
-                });
             }
         });
 
@@ -161,12 +156,6 @@
                 [].forEach.call(expenseDivs, function(div) {
                     div.style.display = 'none';
                 });
-
-                const expenseInputs = document.querySelectorAll('.expense-field');
-                [].forEach.call(expenseInputs, function(input) {
-                    input.disabled = 'disabled';
-                });
-
             }
         });
     </script>

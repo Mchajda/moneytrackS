@@ -57,7 +57,6 @@ class ExpensesController extends AbstractController
      */
     public function store(Request $request): Response
     {
-        dd($request->request->all());
         if($request->isMethod("POST"))
         {
             $expense = $this->requestProcessor->create($request, $this->getUser());
