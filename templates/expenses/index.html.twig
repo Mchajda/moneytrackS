@@ -58,7 +58,7 @@
                         <div class="row mb-3">
                             <label for="category" class="col-sm-2 col-form-label">Category</label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="category" name="category">
+                                <select class="form-control expense-field" id="category" name="category">
                                     {% for cat in categories %}
                                         <option>{{ cat.getCategoryName() }}</option>
                                     {% endfor %}
@@ -69,7 +69,7 @@
                         <div class="row mb-3">
                             <label for="recipient" class="col-sm-2 col-form-label">Recipient</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="recipient" id="recipient" value="other" required>
+                                <input type="text" class="form-control expense-field" name="recipient" id="recipient" value="other" required>
                             </div>
                         </div>
                     </div>
@@ -139,12 +139,34 @@
         expenseRadio.addEventListener('change', (event) => {
             if (document.querySelector("input[id=expense]").checked) {
                 document.getElementById('expense-fields').style.display = 'block';
+                console.log(document.querySelectorAll('.expense-field'));
+
+                const expenseDivs = document.querySelectorAll('.expense-fields');
+                [].forEach.call(expenseDivs, function(div) {
+                    div.style.display = 'block';
+                });
+
+                const expenseInputs = document.querySelectorAll('.expense-field');
+                [].forEach.call(expenseInputs, function(input) {
+                    input.disabled = '';
+                });
             }
         });
 
         incomeRadio.addEventListener('change', (event) => {
             if (document.querySelector("input[id=income]").checked) {
                 document.getElementById('expense-fields').style.display = 'none';
+
+                const expenseDivs = document.querySelectorAll('.expense-fields');
+                [].forEach.call(expenseDivs, function(div) {
+                    div.style.display = 'none';
+                });
+
+                const expenseInputs = document.querySelectorAll('.expense-field');
+                [].forEach.call(expenseInputs, function(input) {
+                    input.disabled = 'disabled';
+                });
+
             }
         });
     </script>
