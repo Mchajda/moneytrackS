@@ -88,7 +88,6 @@
                         </div>
                     </div>
 
-
                 </form>
             </div>
         </div>
@@ -133,5 +132,20 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script>
+        const expenseRadio = document.querySelector("input[id=expense]");
+        const incomeRadio = document.querySelector("input[id=income]");
 
+        expenseRadio.addEventListener('change', (event) => {
+            if (document.querySelector("input[id=expense]").checked) {
+                document.getElementById('expense-fields').style.display = 'block';
+            }
+        });
+
+        incomeRadio.addEventListener('change', (event) => {
+            if (document.querySelector("input[id=income]").checked) {
+                document.getElementById('expense-fields').style.display = 'none';
+            }
+        });
+    </script>
 {% endblock %}
