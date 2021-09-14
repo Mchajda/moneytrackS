@@ -95,7 +95,7 @@ class ExpensesProvider implements ExpensesProviderInterface
 
     public function getMonthlyExpensesForYearByUser($user_id, $year): array
     {
-        $expenses = $this->getAllForYear($user_id, $year);
+        $expenses = $this->getAllForYearByUserId($user_id, $year);
         //wydatki posegregowane na miesiace np do rocznego zestawienia
         $monthly_expenses = [];
 
@@ -112,7 +112,7 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $monthly_expenses;
     }
 
-    public function getSumOfMonthExpensesByUser($user_id, $year, $month): float
+    public function getSumOfMonthExpensesByUserId($user_id, $year, $month): float
     {
         $sumExpenses = 0;
         $expenses = $this->repository->getForDate($user_id, $year, $month, "expense");
@@ -122,7 +122,7 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $sumExpenses;
     }
 
-    public function getSumOfMonthIncomesByUser($user_id, $year, $month): float
+    public function getSumOfMonthIncomesByUserId($user_id, $year, $month): float
     {
         $sumIncomes = 0;
         $incomes = $this->repository->getForDate($user_id, $year, $month, "income");

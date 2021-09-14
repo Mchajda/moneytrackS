@@ -20,7 +20,7 @@ interface ExpensesProviderInterface
 
     public function getMonthlyExpensesForYearByUser($user_id, $year): array;
 
-    public function getSumOfMonthExpensesByUser($user_id, $year, $month): float;
+    public function getSumOfMonthExpensesByUserId($user_id, $year, $month): float;
 
-    public function getSumOfMonthIncomesByUser($user_id, $year, $month): float;
+    public function getSumOfMonthIncomesByUserId($user_id, $year, $month): float;
 }
