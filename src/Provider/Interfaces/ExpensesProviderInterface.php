@@ -6,13 +6,21 @@ namespace App\Provider\Interfaces;
 
 interface ExpensesProviderInterface
 {
-    public function getAll($user_id);
-    public function getAllForMonth($user_id, $year, $month);
-    public function getAllForYear($user_id, $year);
-    public function getAllOrderedByMainCategories($user_id, $year, $month);
-    public function getAllOrderedByCategories($user_id, $year, $month): array;
-    public function getLast($user_id, $num);
-    public function getMonthlyExpenses($user_id, $year);
-    public function getSumOfMonthExpenses($user_id, $year, $month): float;
-    public function getSumOfMonthIncomes($user_id, $year, $month): float;
+    public function getAllByUserId($user_id): array;
+
+    public function getAllForYearByUserId($user_id, $year): array;
+
+    public function getAllForMonthByUserId($user_id, $year, $month): array;
+
+    public function getAllOrderedByMainCategoriesByUserId($user_id, $year, $month): array;
+
+    public function getAllOrderedByCategoriesByUserId($user_id, $year, $month): array;
+
+    public function getLastExpensesByUserId($user_id, $num): array;
+
+    public function getMonthlyExpensesForYearByUser($user_id, $year): array;
+
+    public function getSumOfMonthExpensesByUser($user_id, $year, $month): float;
+
+    public function getSumOfMonthIncomesByUser($user_id, $year, $month): float;
 }
