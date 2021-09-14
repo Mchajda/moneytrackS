@@ -4,17 +4,23 @@
 namespace App\Provider;
 
 
+use App\Provider\Interfaces\CategoryProviderInterface;
 use App\Provider\Interfaces\ExpensesProviderInterface;
 use App\Repository\ExpenseRepository;
 use DateTime;
 
 class ExpensesProvider implements ExpensesProviderInterface
 {
+    /**
+     * @var CategoryProviderInterface
+     */
+    private CategoryProviderInterface $categoryProvider;
     private $repository;
 
-    public function __construct(ExpenseRepository $repository)
+    public function __construct(ExpenseRepository $repository, CategoryProviderInterface $categoryProvider)
     {
         $this->repository = $repository;
+        $this->categoryProvider = $categoryProvider;
     }
 
     public function getAll($user_id)
@@ -32,8 +38,33 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $this->repository->getForDate($user_id, $year, $month, "expense");
     }
 
-    public function getAllOrderedByCategories($user_id, $year, $month, $categories)
+    public function getAllOrderedByMainCategories($user_id, $year, $month)
     {
+        if ($month == 0) //zabezpieczenie w przypadku previous month przypadku grudzien-styczen
+        {
+            $month = 12;
+            $year -= 1;
+        }
+
+        $categories = $this->categoryProvider->getAllParentCategories();
+        $expenses = $this->getAllForMonth($user_id, $year, $month);
+        $this_month_expenses = [];
+
+        foreach ($categories as $category) {
+            $this_month_expenses[$category->getCategoryName()] = 0;
+            foreach ($expenses as $expense) {
+                if ($expense->getCategoryNew() == $category || $expense->getCategoryNew()->getParentCategory() == $category) {
+                    $this_month_expenses[$category->getCategoryName()] += $expense->getAmount();
+                }
+            }
+        }
+
+        return $this_month_expenses;
+    }
+
+    public function getAllOrderedByCategories($user_id, $year, $month): array
+    {
+        $categories = $this->categoryProvider->getAllCategories();
         if ($month == 0) //zabezpieczenie w przypadku previous month przypadku grudzien-styczen
         {
             $month = 12;

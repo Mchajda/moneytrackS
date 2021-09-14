@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,27 @@ class Category
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $category_color;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="categories")
+     */
+    private $parent_category;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Category::class, mappedBy="parent_category")
+     */
+    private $categories;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Expense::class, mappedBy="category_new")
+     */
+    private $expenses;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+        $this->expenses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +126,78 @@ class Category
     public function setCategoryColor(?string $category_color): self
     {
         $this->category_color = $category_color;
+
+        return $this;
+    }
+
+    public function getParentCategory(): ?self
+    {
+        return $this->parent_category;
+    }
+
+    public function setParentCategory(?self $parent_category): self
+    {
+        $this->parent_category = $parent_category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|self[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(self $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->setParentCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(self $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            // set the owning side to null (unless already changed)
+            if ($category->getParentCategory() === $this) {
+                $category->setParentCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Expense[]
+     */
+    public function getExpenses(): Collection
+    {
+        return $this->expenses;
+    }
+
+    public function addExpense(Expense $expense): self
+    {
+        if (!$this->expenses->contains($expense)) {
+            $this->expenses[] = $expense;
+            $expense->setCategoryNew($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpense(Expense $expense): self
+    {
+        if ($this->expenses->removeElement($expense)) {
+            // set the owning side to null (unless already changed)
+            if ($expense->getCategoryNew() === $this) {
+                $expense->setCategoryNew(null);
+            }
+        }
 
         return $this;
     }

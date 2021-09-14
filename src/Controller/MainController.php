@@ -55,4 +55,16 @@ class MainController extends AbstractController
             'thisMonthSumOfExpenses' => $thisMonthSumOfExpenses, 'thisMonthSumOfIncomes' => $thisMonthSumOfIncomes
         ]);
     }
+
+    /**
+     * @Route("/debug", name="debug")
+     */
+    public function debug(): Response
+    {
+        $user = $this->getUser();
+        $current_year = date('Y');
+        $current_month = date('m');
+
+        dd($this->expensesProvider->getAllOrderedByMainCategories($user->getId(), $current_year, $current_month));
+    }
 }

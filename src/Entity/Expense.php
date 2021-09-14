@@ -62,6 +62,11 @@ class Expense
      */
     private $updated_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="expenses")
+     */
+    private $category_new;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -171,6 +176,18 @@ class Expense
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getCategoryNew(): ?Category
+    {
+        return $this->category_new;
+    }
+
+    public function setCategoryNew(?Category $category_new): self
+    {
+        $this->category_new = $category_new;
 
         return $this;
     }

@@ -50,4 +50,19 @@ class CategoryProvider implements CategoryProviderInterface
 
         return $categories_colors;
     }
+
+    public function getAllParentCategories(): array
+    {
+        $categories = $this->repository->findAll();
+        $parents = [];
+
+        foreach($categories as $cat)
+        {
+            if ($cat->getParentCategory() == null) {
+                $parents[] = $cat;
+            }
+        }
+
+        return $parents;
+    }
 }
