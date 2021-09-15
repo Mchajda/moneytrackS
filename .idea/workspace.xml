@@ -4,10 +4,17 @@
     <list default="true" id="fdc1689e-9703-4089-b978-f41600036152" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/ExpensesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ExpensesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/MainController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/MainController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Expense.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Expense.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Factory/ExpenseFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Factory/ExpenseFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Provider/CategoryProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Provider/CategoryProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Provider/ExpensesProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Provider/ExpensesProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Provider/Interfaces/CategoryProviderInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Provider/Interfaces/CategoryProviderInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Provider/Interfaces/ExpensesProviderInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Provider/Interfaces/ExpensesProviderInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ExpenseRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ExpenseRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RequestProcessor/ExpenseRequestProcessor.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/RequestProcessor/ExpenseRequestProcessor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RequestProcessor/Interfaces/ExpenseRequestProcessorInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/RequestProcessor/Interfaces/ExpenseRequestProcessorInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/expenses/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/expenses/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +153,7 @@
       <workItem from="1631475106692" duration="3139000" />
       <workItem from="1631644415224" duration="1651000" />
       <workItem from="1631646945133" duration="5515000" />
-      <workItem from="1631732086169" duration="1947000" />
+      <workItem from="1631732086169" duration="5917000" />
     </task>
     <servers />
   </component>

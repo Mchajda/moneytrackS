@@ -60,7 +60,17 @@
                             <div class="col-sm-10">
                                 <select class="form-control expense-field" id="category" name="category">
                                     {% for cat in categories %}
-                                        <option value="{{ cat.getCategoryName() }}">{{ cat.getCategoryName() }}</option>
+                                        {% if cat.getCategories is not empty %}
+                                            <optgroup label="{{ cat.getCategoryName() }}">
+                                                <option value="{{ cat.getCategoryName() }}">
+                                                    <b>{{ cat.getCategoryName() }}</b></option>
+                                                {% for subCat in cat.getCategories %}
+                                                    <option value="{{ subCat.getCategoryName() }}">{{ subCat.getCategoryName() }}</option>
+                                                {% endfor %}
+                                            </optgroup>
+                                        {% elseif cat.getCategories is empty and cat.parentCategory is null %}
+                                            <option value="{{ cat.getCategoryName() }}">{{ cat.getCategoryName() }}</option>
+                                        {% endif %}
                                     {% endfor %}
                                 </select>
                             </div>
@@ -69,7 +79,8 @@
                         <div class="row mb-3">
                             <label for="recipient" class="col-sm-2 col-form-label">Recipient</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control expense-field" name="recipient" id="recipient" value="other" required>
+                                <input type="text" class="form-control expense-field" name="recipient" id="recipient"
+                                       value="other" required>
                             </div>
                         </div>
 
@@ -123,7 +134,7 @@
                                     <div class="d-flex align-items-center">
                                         <div class="border rounded-circle p-2">
                                             <a href="#">
-                                                <img src="/assets/icons/{{ expense.getCategory() }}.svg"
+                                                <img src="/assets/icons/{{ expense.getCategory().categoryName }}.svg"
                                                      class="img-fluid" style="width: 36px; height: 36px;">
                                             </a>
                                         </div>
@@ -162,7 +173,7 @@
                 console.log(document.querySelectorAll('.expense-field'));
 
                 const expenseDivs = document.querySelectorAll('.expense-fields');
-                [].forEach.call(expenseDivs, function(div) {
+                [].forEach.call(expenseDivs, function (div) {
                     div.style.display = 'block';
                 });
             }
@@ -173,7 +184,7 @@
                 document.getElementById('expense-fields').style.display = 'none';
 
                 const expenseDivs = document.querySelectorAll('.expense-fields');
-                [].forEach.call(expenseDivs, function(div) {
+                [].forEach.call(expenseDivs, function (div) {
                     div.style.display = 'none';
                 });
             }

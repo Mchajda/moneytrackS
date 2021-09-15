@@ -47,7 +47,7 @@ class ExpensesController extends AbstractController
             'balance' => $this->getUser()->getBalance(),
             'expenses' => $this->expensesProvider->getLastExpensesByUserId($this->getUser()->getId(),5),
             'current_year' => $current_year, 'current_month' => $current_month, 'current_day' => $current_day,
-            'categories' => $this->categoryProvider->getAllCategories(),
+            'categories' => $this->categoryProvider->getAllParentCategories(),
             'alert' => $alert, 'alert_class' => $alert_class,
         ]);
     }
@@ -59,7 +59,8 @@ class ExpensesController extends AbstractController
     {
         if($request->isMethod("POST"))
         {
-            $expense = $this->requestProcessor->create($request, $this->getUser());
+            $category = $this->categoryProvider->getOneByName($request->request->get('category'));
+            $expense = $this->requestProcessor->create($request, $this->getUser(), $category);
             $this->expenseService->create($expense);
 
             $alert = "Expense ".$expense->getTitle()." added successfully";

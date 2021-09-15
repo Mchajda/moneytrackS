@@ -10,9 +10,9 @@ interface ExpensesProviderInterface
 
     public function getAllForYearByUserId($user_id, $year): array;
 
-    public function getAllForMonthByUserId($user_id, $year, $month): array;
+    public function getAllForMonthByUserId($user_id, $year, $month, $amIPayer): array;
 
-    public function getAllOrderedByMainCategoriesByUserId($user_id, $year, $month): array;
+    public function getAllOrderedByMainCategoriesByUserId($user_id, $year, $month, $amIPayer): array;
 
     public function getAllOrderedByCategoriesByUserId($user_id, $year, $month): array;
 

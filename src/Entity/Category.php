@@ -59,6 +59,11 @@ class Category
      */
     private $expenses;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $sort_order;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -198,6 +203,18 @@ class Category
                 $expense->setCategoryNew(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSortOrder(): ?int
+    {
+        return $this->sort_order;
+    }
+
+    public function setSortOrder(?int $sort_order): self
+    {
+        $this->sort_order = $sort_order;
 
         return $this;
     }

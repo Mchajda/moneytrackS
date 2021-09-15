@@ -4,6 +4,7 @@
 namespace App\Provider;
 
 
+use App\Entity\Category;
 use App\Provider\Interfaces\CategoryProviderInterface;
 use App\Repository\CategoryRepository;
 
@@ -53,7 +54,7 @@ class CategoryProvider implements CategoryProviderInterface
 
     public function getAllParentCategories(): array
     {
-        $categories = $this->repository->findAll();
+        $categories = $this->repository->findBy([], ['sort_order' => 'ASC']);
         $parents = [];
 
         foreach($categories as $cat)
@@ -64,5 +65,10 @@ class CategoryProvider implements CategoryProviderInterface
         }
 
         return $parents;
+    }
+
+    public function getOneByName($category_name): ?Category
+    {
+        return $this->repository->findOneBy(['category_name' => $category_name]);
     }
 }

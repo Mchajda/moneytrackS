@@ -37,12 +37,12 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $this->repository->getForYear($user_id, $year, "expense");
     }
 
-    public function getAllForMonthByUserId($user_id, $year, $month): array
+    public function getAllForMonthByUserId($user_id, $year, $month, $amIPayer): array
     {
-        return $this->repository->getForDate($user_id, $year, $month, "expense");
+        return $this->repository->getForDate($user_id, $year, $month, "expense", $amIPayer);
     }
 
-    public function getAllOrderedByMainCategoriesByUserId($user_id, $year, $month): array
+    public function getAllOrderedByMainCategoriesByUserId($user_id, $year, $month, $amIPayer): array
     {
         if ($month == 0) //zabezpieczenie w przypadku previous month przypadku grudzien-styczen
         {
@@ -51,13 +51,13 @@ class ExpensesProvider implements ExpensesProviderInterface
         }
 
         $categories = $this->categoryProvider->getAllParentCategories();
-        $expenses = $this->getAllForMonthByUserId($user_id, $year, $month);
+        $expenses = $this->getAllForMonthByUserId($user_id, $year, $month, $amIPayer);
         $this_month_expenses = [];
 
         foreach ($categories as $category) {
             $this_month_expenses[$category->getCategoryName()] = 0;
             foreach ($expenses as $expense) {
-                if ($expense->getCategoryNew() == $category || $expense->getCategoryNew()->getParentCategory() == $category) {
+                if ($expense->getCategory() == $category || $expense->getCategory()->getParentCategory() == $category) {
                     $this_month_expenses[$category->getCategoryName()] += $expense->getAmount();
                 }
             }
@@ -125,7 +125,7 @@ class ExpensesProvider implements ExpensesProviderInterface
     public function getSumOfMonthIncomesByUserId($user_id, $year, $month): float
     {
         $sumIncomes = 0;
-        $incomes = $this->repository->getForDate($user_id, $year, $month, "income");
+        $incomes = $this->repository->getForDate($user_id, $year, $month, "income", false);
         foreach ($incomes as $income) {
             $sumIncomes += $income->getAmount();
         }

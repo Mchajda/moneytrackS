@@ -30,11 +30,6 @@ class Expense
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $category;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $recipient;
 
     /**
@@ -65,7 +60,7 @@ class Expense
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="expenses")
      */
-    private $category_new;
+    private $category;
 
     /**
      * @ORM\Column(type="boolean")
@@ -97,18 +92,6 @@ class Expense
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): self
-    {
-        $this->category = $category;
 
         return $this;
     }
@@ -185,14 +168,14 @@ class Expense
         return $this;
     }
 
-    public function getCategoryNew(): ?Category
+    public function getCategory(): ?Category
     {
-        return $this->category_new;
+        return $this->category;
     }
 
-    public function setCategoryNew(?Category $category_new): self
+    public function setCategory(?Category $category): self
     {
-        $this->category_new = $category_new;
+        $this->category = $category;
 
         return $this;
     }

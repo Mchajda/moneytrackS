@@ -27,25 +27,26 @@ class ExpenseRepository extends ServiceEntityRepository
      * @return Expense[] Returns an array of Expense objects
      */
 
-    public function getForDate($user_id, $year, $month, $direction)
+    public function getForDate($user_id, $year, $month, $direction, $amIPayer = true)
     {
-        $numOfDays = date("t", mktime(0,0,0,$month,3,$year));
-        $from = $year.'-'.$month.'-01';
-        $to = $year.'-'.$month.'-'.$numOfDays;
+        $numOfDays = date("t", mktime(0, 0, 0, $month, 3, $year));
+        $from = $year . '-' . $month . '-01';
+        $to = $year . '-' . $month . '-' . $numOfDays;
 
         return $this->createQueryBuilder('e')
             ->andWhere('e.user_id = :user_id')
             ->setParameter('user_id', $user_id)
             ->andWhere('e.direction = :direction')
             ->setParameter('direction', $direction)
+            ->andWhere('e.amIPayer = :amIPayer')
+            ->setParameter('amIPayer', $amIPayer)
             ->andWhere('e.date BETWEEN :from AND :to')
-            ->setParameter('from', $from )
+            ->setParameter('from', $from)
             ->setParameter('to', $to)
             ->orderBy('e.date', 'DESC')
             ->orderBy('e.created_at', 'DESC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     /**
@@ -57,8 +58,8 @@ class ExpenseRepository extends ServiceEntityRepository
 
     public function getForYear($user_id, $year, $direction)
     {
-        $from = $year.'-01-01';
-        $to = $year.'-12-31';
+        $from = $year . '-01-01';
+        $to = $year . '-12-31';
 
         return $this->createQueryBuilder('e')
             ->andWhere('e.user_id = :user_id')
@@ -66,13 +67,12 @@ class ExpenseRepository extends ServiceEntityRepository
             ->andWhere('e.direction = :direction')
             ->setParameter('direction', $direction)
             ->andWhere('e.date BETWEEN :from AND :to')
-            ->setParameter('from', $from )
+            ->setParameter('from', $from)
             ->setParameter('to', $to)
             ->orderBy('e.date', 'DESC')
             ->orderBy('e.created_at', 'DESC')
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
     /**
@@ -90,8 +90,7 @@ class ExpenseRepository extends ServiceEntityRepository
             ->orderBy('e.created_at', 'DESC')
             ->setMaxResults($num)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
 
 

@@ -39,7 +39,7 @@ class MainController extends AbstractController
         $alert = "";
         $alert_class = "";
 
-        $this_month_expenses = array_values($this->expensesProvider->getAllOrderedByMainCategoriesByUserId($user->getId(), $current_year, $current_month,));
+        $this_month_expenses = array_values($this->expensesProvider->getAllOrderedByMainCategoriesByUserId($user->getId(), $current_year, $current_month, true));
         $categories = $this->categoryProvider->getAllCategoriesNames();
         $categories_colors = $this->categoryProvider->getCategoriesColors();
 

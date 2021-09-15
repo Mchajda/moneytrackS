@@ -10,5 +10,5 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 interface ExpenseRequestProcessorInterface
 {
-    public function create(Request $request, UserInterface $user);
+    public function create(Request $request, UserInterface $user, $category);
 }
