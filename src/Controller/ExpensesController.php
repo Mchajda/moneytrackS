@@ -45,7 +45,7 @@ class ExpensesController extends AbstractController
 
         return $this->render('expenses/index.html.twig', [
             'balance' => $this->getUser()->getBalance(),
-            'expenses' => $this->expensesProvider->getLast($this->getUser()->getId(),5),
+            'expenses' => $this->expensesProvider->getLastExpensesByUserId($this->getUser()->getId(),5),
             'current_year' => $current_year, 'current_month' => $current_month, 'current_day' => $current_day,
             'categories' => $this->categoryProvider->getAllCategories(),
             'alert' => $alert, 'alert_class' => $alert_class,
@@ -61,10 +61,6 @@ class ExpensesController extends AbstractController
         {
             $expense = $this->requestProcessor->create($request, $this->getUser());
             $this->expenseService->create($expense);
-
-            if($request->request->get('direction') == "expense")
-                $this->getUser()->setBalance($this->getUser()->getBalance() - $request->request->get('amount'));
-            else $this->getUser()->setBalance($this->getUser()->getBalance() + $request->request->get('amount'));
 
             $alert = "Expense ".$expense->getTitle()." added successfully";
             $alert_class = "alert-success";

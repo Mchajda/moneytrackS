@@ -21,6 +21,7 @@ class ExpenseRequestProcessor implements ExpenseRequestProcessorInterface
         $recipient = $request->request->get('recipient');
         $amount = $request->request->get('amount');
         $direction = $request->request->get('direction');
+        $amIPayer = $request->request->get('payer');
 
         return ExpenseFactory::create(
             $user_id,
@@ -29,7 +30,8 @@ class ExpenseRequestProcessor implements ExpenseRequestProcessorInterface
             $category,
             $recipient,
             $amount,
-            $direction
+            $direction,
+            $amIPayer
         );
     }
 }

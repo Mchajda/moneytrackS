@@ -72,6 +72,26 @@
                                 <input type="text" class="form-control expense-field" name="recipient" id="recipient" value="other" required>
                             </div>
                         </div>
+
+                        <fieldset class="row mb-3">
+                            <legend class="col-form-label col-sm-2 pt-0">Payer</legend>
+                            <div class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="payer" id="self"
+                                           value="self" checked>
+                                    <label class="form-check-label" for="self">
+                                        Self
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="payer" id="notSelf"
+                                           value="notSelf">
+                                    <label class="form-check-label" for="notSelf">
+                                        Not self
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
                     </div>
 
                     <div class="row mb-3">

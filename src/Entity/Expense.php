@@ -67,6 +67,11 @@ class Expense
      */
     private $category_new;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $amIPayer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -188,6 +193,18 @@ class Expense
     public function setCategoryNew(?Category $category_new): self
     {
         $this->category_new = $category_new;
+
+        return $this;
+    }
+
+    public function getAmIPayer(): ?bool
+    {
+        return $this->amIPayer;
+    }
+
+    public function setAmIPayer(bool $amIPayer): self
+    {
+        $this->amIPayer = $amIPayer;
 
         return $this;
     }
