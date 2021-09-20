@@ -17,6 +17,7 @@ class ExpensesService extends EntityService implements ExpensesServiceInterface
 
     public function create(Expense &$expense): void
     {
-        $this->createEntity($expense);
+        $this->entity_manager->persist($expense);
+        $this->entity_manager->flush();
     }
 }

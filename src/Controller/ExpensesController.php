@@ -33,13 +33,23 @@ class ExpensesController extends AbstractController
     }
 
     /**
-     * @Route("/add-expense", name="add_expense_form")
+     * @Route("/add-expense", name="add_expense_form", methods={"GET|POST"})
      */
     public function index(Request $request, DateProvider $dateProvider): Response
     {
         $alert = (string)$request->query->get('alert');
         $alert_class = (string)$request->query->get('alert_class');
         $date = $dateProvider->getTodayDate();
+
+        if($request->isMethod("POST"))
+        {
+            $params = $request->request->all();
+            $expense = $this->requestProcessor->create($params, $this->getUser());
+            $this->expenseService->create($expense);
+
+            $alert = "Expense ".$expense->getTitle()." added successfully";
+            $alert_class = "alert-success";
+        }
 
         return $this->render('expenses/index.html.twig', [
             'current_year' => $date['year'], 'current_month' => $date['month'], 'current_day' => $date['day'],

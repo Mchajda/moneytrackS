@@ -17,7 +17,7 @@
         <div class="col-md-6 col-sm-12">
             <h2>Add expense</h2>
             <div class="card card-body">
-                <form action="{{ path('add_expense', {'year' : current_year, 'month' : current_month}) }}"
+                <form action="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}"
                       enctype="multipart/form-data" method="post">
                     <div class="row mb-3">
                         <label for="title" class="col-sm-2 col-form-label">Title</label>

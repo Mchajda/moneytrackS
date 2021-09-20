@@ -4,23 +4,35 @@
 namespace App\RequestProcessor;
 
 
-use App\Entity\User;
+use App\Entity\Expense;
 use App\Factory\ExpenseFactory;
+use App\Provider\Interfaces\CategoryProviderInterface;
 use App\RequestProcessor\Interfaces\ExpenseRequestProcessorInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class ExpenseRequestProcessor implements ExpenseRequestProcessorInterface
 {
-    public function create(Request $request, UserInterface $user, $category)
+    private CategoryProviderInterface $categoryProvider;
+
+    /**
+     * @param CategoryProviderInterface $categoryProvider
+     */
+    public function __construct(CategoryProviderInterface $categoryProvider)
     {
+        $this->categoryProvider = $categoryProvider;
+    }
+
+    public function create(array $params, UserInterface $user): Expense
+    {
+        $category = $this->categoryProvider->getOneByName($params['category']);
+
         $user_id = $user->getId();
-        $title = $request->request->get('title');
-        $date = $request->request->get('date');
-        $recipient = $request->request->get('recipient');
-        $amount = $request->request->get('amount');
-        $direction = $request->request->get('direction');
-        $amIPayer = $request->request->get('payer');
+        $title = $params['title'];
+        $date = $params['date'];
+        $recipient = $params['recipient'];
+        $amount = $params['amount'];
+        $direction = $params['direction'];
+        $amIPayer = $params['payer'];
 
         return ExpenseFactory::create(
             $user_id,
