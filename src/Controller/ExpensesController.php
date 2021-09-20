@@ -20,10 +20,10 @@ class ExpensesController extends AbstractController
     private $expensesProvider;
 
     public function __construct(
-        CategoryProviderInterface $categoryProvider,
+        CategoryProviderInterface        $categoryProvider,
         ExpenseRequestProcessorInterface $expenseRequestProcessor,
-        ExpensesServiceInterface $expenseService,
-        ExpensesProviderInterface $expensesProvider
+        ExpensesServiceInterface         $expenseService,
+        ExpensesProviderInterface        $expensesProvider
     )
     {
         $this->categoryProvider = $categoryProvider;
@@ -39,51 +39,26 @@ class ExpensesController extends AbstractController
     {
         $alert = (string)$request->query->get('alert');
         $alert_class = (string)$request->query->get('alert_class');
-        $date = $dateProvider->getTodayDate();
+        $todayDate = $dateProvider->getTodayDate();
 
-        if($request->isMethod("POST"))
-        {
+        if ($request->isMethod("POST")) {
             $params = $request->request->all();
             $expense = $this->requestProcessor->create($params, $this->getUser());
+            //try catch?
             $this->expenseService->create($expense);
+            $lastUsedDate = $dateProvider->getLastUsedDate($expense->getDate());
 
-            $alert = "Expense ".$expense->getTitle()." added successfully";
+            $alert = "Expense " . $expense->getTitle() . " added successfully!";
             $alert_class = "alert-success";
         }
+
+        $date = $lastUsedDate ?? $todayDate;
 
         return $this->render('expenses/index.html.twig', [
             'current_year' => $date['year'], 'current_month' => $date['month'], 'current_day' => $date['day'],
-            'expenses' => $this->expensesProvider->getLastExpensesByUserId($this->getUser()->getId(),5),
+            'expenses' => $this->expensesProvider->getLastExpensesByUserId($this->getUser()->getId(), 5),
             'categories' => $this->categoryProvider->getAllParentCategories(),
             'alert' => $alert, 'alert_class' => $alert_class,
         ]);
-    }
-
-    /**
-     * @Route("/store_expense/{year}/{month}", name="add_expense")
-     */
-    public function store(Request $request): Response
-    {
-        if($request->isMethod("POST"))
-        {
-            $category = $this->categoryProvider->getOneByName($request->request->get('category'));
-            $expense = $this->requestProcessor->create($request, $this->getUser(), $category);
-            $this->expenseService->create($expense);
-
-            $alert = "Expense ".$expense->getTitle()." added successfully";
-            $alert_class = "alert-success";
-
-        }
-        else
-        {
-            $alert = "Operation failed";
-            $alert_class = "alert-danger";
-        }
-
-        $current_year = date('Y');
-        $current_month = date('m');
-        $current_day = date('d');
-
-        return $this->redirectToRoute('add_expense_form', ['year' => $current_year, 'month' => $current_month, 'day' => $current_day, 'alert' => $alert, 'alert_class' => $alert_class]);
     }
 }

@@ -12,4 +12,13 @@ class DateProvider
             'day' => date('d'),
         ];
     }
+
+    public function getLastUsedDate(string $date): array
+    {
+        return [
+            'year' => explode('-', $date)[0],
+            'month' => explode('-', $date)[1],
+            'day' => explode('-', $date)[2],
+        ];
+    }
 }
