@@ -30,11 +30,6 @@ class Expense
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $category;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $recipient;
 
     /**
@@ -62,6 +57,16 @@ class Expense
      */
     private $updated_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="expenses")
+     */
+    private $category;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $amIPayer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,18 +92,6 @@ class Expense
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): self
-    {
-        $this->category = $category;
 
         return $this;
     }
@@ -171,6 +164,30 @@ class Expense
     public function setUpdatedAt(\DateTimeInterface $updated_at): self
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getAmIPayer(): ?bool
+    {
+        return $this->amIPayer;
+    }
+
+    public function setAmIPayer(bool $amIPayer): self
+    {
+        $this->amIPayer = $amIPayer;
 
         return $this;
     }

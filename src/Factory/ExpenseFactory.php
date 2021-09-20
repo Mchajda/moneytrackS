@@ -15,7 +15,8 @@ class ExpenseFactory
         $category,
         $recipient,
         $amount,
-        $direction
+        $direction,
+        $amIPayer
     )
     {
         $expense = new Expense();
@@ -27,6 +28,15 @@ class ExpenseFactory
         $expense->setRecipient($recipient);
         $expense->setAmount($amount);
         $expense->setDirection($direction);
+
+        if ($direction == "expense" && $amIPayer == "self") {
+            $expense->setAmIPayer(true);
+        } else if ($direction == "expense" && $amIPayer != "self") {
+            $expense->setAmIPayer(false);
+        } else if ($direction == "income") {
+            $expense->setAmIPayer(false);
+        }
+
         $expense->setCreatedAt(new \DateTime());
         $expense->setUpdatedAt(new \DateTime());
 

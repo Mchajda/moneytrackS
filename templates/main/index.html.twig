@@ -26,7 +26,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="border rounded-circle p-2">
                                         <a href="#">
-                                            <img src="/assets/icons/{{ expense.getCategory() }}.svg" class="img-fluid"
+                                            <img src="/assets/icons/{{ expense.getCategory().categoryName }}.svg" class="img-fluid"
                                                  style="width: 36px; height: 36px;">
                                         </a>
                                     </div>
@@ -53,12 +53,12 @@
 
         <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="card card-body py-4 shadow">
-                <h3>Ten miesiąc:</h3>
-                <div style="height: 10%">
+                <h3>{{ current_year }}-{{ current_month }}</h3>
+                <div >
                     <canvas id="expensesVsIncomesChart"></canvas>
                 </div>
                 <hr>
-                <div style="height: 30%">
+                <div >
                     <canvas id="monthChart"></canvas>
                 </div>
             </div>

@@ -10,9 +10,9 @@ interface EntityServiceInterface
 {
     /**
      * EntityServiceInterface constructor.
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManagerInterface $entity
      */
-    public function createEntity(&$entityManager): void;
+    public function createEntity(&$entity): void;
 
     public function save(): void;
 }
