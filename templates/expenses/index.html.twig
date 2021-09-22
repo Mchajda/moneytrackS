@@ -20,15 +20,15 @@
                 <form action="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}"
                       enctype="multipart/form-data" method="post">
                     <div class="row mb-3">
-                        <label for="title" class="col-sm-2 col-form-label">Title</label>
-                        <div class="col-sm-10">
+                        <label for="title" class="col-md-3 col-sm-12 form-label">Title</label>
+                        <div class="col-md-9 col-sm-12">
                             <input type="text" class="form-control" name="title" id="title" required>
                         </div>
                     </div>
 
                     <fieldset class="row mb-3">
-                        <legend class="col-form-label col-sm-2 pt-0">Direction</legend>
-                        <div class="col-sm-10">
+                        <legend class="col-md-3 col-sm-12 col-form-label pt-0">Direction</legend>
+                        <div class="col-md-9 col-sm-12">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="direction" id="expense"
                                        value="expense" checked>
@@ -47,8 +47,8 @@
                     </fieldset>
 
                     <div class="row mb-3">
-                        <label for="date" class="col-sm-2 col-form-label">Date</label>
-                        <div class="col-sm-10">
+                        <label for="date" class="col-md-3 col-sm-12 form-label">Date</label>
+                        <div class="col-md-9 col-sm-12">
                             <input type="date" class="form-control" name="date" id="date"
                                    value="{{ current_year }}-{{ current_month }}-{{ current_day }}"
                                    required
@@ -58,8 +58,8 @@
 
                     <div class="expense-fields" id="expense-fields">
                         <div class="row mb-3">
-                            <label for="category" class="col-sm-2 col-form-label">Category</label>
-                            <div class="col-sm-10">
+                            <label for="category" class="col-md-3 col-sm-12 form-label">Category</label>
+                            <div class="col-md-9 col-sm-12">
                                 <select class="form-control expense-field" id="category" name="category">
                                     {% for cat in categories %}
                                         {% if cat.getCategories is not empty %}
@@ -79,16 +79,16 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="recipient" class="col-sm-2 col-form-label">Recipient</label>
-                            <div class="col-sm-10">
+                            <label for="recipient" class="col-md-3 col-sm-12 form-label">Recipient</label>
+                            <div class="col-md-9 col-sm-12">
                                 <input type="text" class="form-control expense-field" name="recipient" id="recipient"
                                        value="other" required>
                             </div>
                         </div>
 
                         <fieldset class="row mb-3">
-                            <legend class="col-form-label col-sm-2 pt-0">Payer</legend>
-                            <div class="col-sm-10">
+                            <legend class="col-md-3 col-sm-12 col-form-label pt-0">Payer</legend>
+                            <div class="col-md-9 col-sm-12">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="payer" id="self"
                                            value="self" checked>
@@ -108,15 +108,15 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="amount" class="col-sm-2 col-form-label">Amount</label>
-                        <div class="col-sm-10">
+                        <label for="amount" class="col-md-3 col-sm-12 form-label">Amount</label>
+                        <div class="col-md-9 col-sm-12">
                             <input type="number" class="form-control" name="amount" id="amount" step="0.01" required>
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <label for="amount" class="col-sm-2 col-form-label"></label>
-                        <div class="col-sm-10 d-grid">
+                        <label for="amount" class="col-md-3 col-sm-12 form-label"></label>
+                        <div class="col-md-9 col-sm-12 d-grid">
                             <button type="submit" class="btn btn-primary btn-sm">Save</button>
                         </div>
                     </div>
