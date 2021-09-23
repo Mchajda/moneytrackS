@@ -27,7 +27,7 @@ class ExpenseRepository extends ServiceEntityRepository
      * @return Expense[] Returns an array of Expense objects
      */
 
-    public function getForDate($user_id, $year, $month, $direction, $amIPayer = true)
+    public function getForDate($user_id, $year, $month, $direction, $amIPayer = true): array
     {
         $numOfDays = date("t", mktime(0, 0, 0, $month, 3, $year));
         $from = $year . '-' . $month . '-01';
@@ -43,8 +43,8 @@ class ExpenseRepository extends ServiceEntityRepository
             ->andWhere('e.date BETWEEN :from AND :to')
             ->setParameter('from', $from)
             ->setParameter('to', $to)
-            ->orderBy('e.date', 'DESC')
             ->orderBy('e.created_at', 'DESC')
+            ->orderBy('e.date', 'DESC')
             ->getQuery()
             ->getResult();
     }
