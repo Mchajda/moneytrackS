@@ -1,17 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Main Page{% endblock %}
+{% block title %}MONEYTRACK | your profile{% endblock %}
 
 {% block sidemenu %}
-    <a href="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}"
-       class="btn btn-block btn-outline-primary"><span class="material-icons">add</span>Add Expense</a>
-    <hr>
-    <a href="{{ path('main') }}" class="btn btn-block btn-primary text-left"><b><span
-                    class="material-icons mr-1">list</span>Home</b></a>
-    <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}"
-       class="btn btn-block btn-light text-left"><span class="material-icons mr-1">shopping_cart</span>Transactions</a>
-    <a href="{{ path('summary', {'year' : current_year, 'month' : current_month}) }}"
-       class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Summary</a>
+
 {% endblock %}
 
 {% block body %}
