@@ -7,18 +7,19 @@
 {% endblock %}
 
 {% block body %}
-    <div class="row mt-4">
-        <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="card card-body bg-light pt-0">
-                <h3>Twoje ostatnie transakcje</h3>
-                {% for expense in expenses %}
-                    <div class="card shadow my-2">
-                        <div class="card-body pt-2 pb-2">
+    <section class="container-md container-fluid-md">
+        <div class="row mt-4">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card card-body shadow py-4">
+                    <h3>Twoje ostatnie transakcje</h3>
+                    {% for expense in expenses %}
+                        <div class="card card-body bg-light border pt-2 pb-2 my-2">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
                                     <div class="border rounded-circle p-2">
                                         <a href="#">
-                                            <img src="/assets/icons/{{ expense.getCategory().categoryName|slug }}.svg" class="img-fluid"
+                                            <img src="/assets/icons/{{ expense.getCategory().categoryName|slug }}.svg"
+                                                 class="img-fluid"
                                                  style="width: 36px; height: 36px;">
                                         </a>
                                     </div>
@@ -38,24 +39,24 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                </div>
             </div>
-        </div>
 
-        <div class="col-lg-6 col-md-6 col-sm-12">
-            <div class="card card-body py-4 shadow">
-                <h3>{{ current_year }}-{{ current_month }}</h3>
-                <div >
-                    <canvas id="expensesVsIncomesChart"></canvas>
-                </div>
-                <hr>
-                <div >
-                    <canvas id="monthChart"></canvas>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card card-body py-4 shadow">
+                    <h3>{{ current_year }}-{{ current_month }}</h3>
+                    <div>
+                        <canvas id="expensesVsIncomesChart"></canvas>
+                    </div>
+                    <hr>
+                    <div>
+                        <canvas id="monthChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 {% endblock %}
 
 {% block javascripts %}

@@ -64,16 +64,7 @@
         </div>
     </div>
 </section>
-
-<section class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="container-fluid">
-                {% block body %}{% endblock %}
-            </div>
-        </div>
-    </div>
-</section>
+{% block body %}{% endblock %}
 <section>
     <div class="alert-position">
         {% if alert and alert != '' %}
