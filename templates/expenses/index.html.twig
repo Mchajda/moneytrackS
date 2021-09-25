@@ -6,9 +6,9 @@
     <a href="#" class="btn btn-block btn-primary"><b><span class="material-icons">add</span>Add Expense</b></a>
     <hr>
     <a href="{{ path('main') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">list</span>Home</a>
-    <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}"
+    <a href="{{ path('transactions', {'this_year' : this_year, 'this_month' : this_month}) }}"
        class="btn btn-block btn-light text-left"><span class="material-icons mr-1">shopping_cart</span>Transactions</a>
-    <a href="{{ path('summary', {'year' : current_year, 'month' : current_month}) }}"
+    <a href="{{ path('summary', {'this_year' : this_year, 'this_month' : this_month}) }}"
        class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Summary</a>
 {% endblock %}
 
@@ -18,7 +18,7 @@
             <div class="col-md-6 col-sm-12">
                 <h2>Add expense</h2>
                 <div class="card card-body">
-                    <form action="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}"
+                    <form action="{{ path('add_expense_form', {'this_year' : this_year, 'this_month' : this_month}) }}"
                           enctype="multipart/form-data" method="post">
 
                         <div class="row mb-3">
@@ -52,7 +52,7 @@
                             <label for="date" class="col-sm-3 col-form-label">Date</label>
                             <div class="col-sm-9">
                                 <input type="date" class="form-control" name="date" id="date"
-                                       value="{{ current_year }}-{{ current_month }}-{{ current_day }}"
+                                       value="{{ this_year }}-{{ this_month }}-{{ this_day }}"
                                        required
                                 >
                             </div>

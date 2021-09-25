@@ -55,7 +55,7 @@ class ExpensesController extends AbstractController
         $date = $lastUsedDate ?? $todayDate;
 
         return $this->render('expenses/index.html.twig', [
-            'current_year' => $date['year'], 'current_month' => $date['month'], 'current_day' => $date['day'],
+            'this_year' => $date['year'], 'this_month' => $date['month'], 'this_day' => $date['day'],
             'expenses' => $this->expensesProvider->getLastExpensesByUserId($this->getUser()->getId(), 5),
             'categories' => $this->categoryProvider->getAllParentCategories(),
             'alert' => $alert, 'alert_class' => $alert_class,
