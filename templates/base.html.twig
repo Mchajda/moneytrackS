@@ -46,18 +46,18 @@
                     aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            <a href="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}"
+            <a href="{{ path('add_expense_form', {'this_year' : this_year, 'this_month' : this_month}) }}"
                class="btn btn-outline-primary w-100"><span class="material-icons">add</span>Add Expense</a>
             <hr>
 
             <a href="{{ path('main') }}" class="btn btn-outline-dark w-100 mb-2">
                 <b><span class="material-icons mr-1">list</span>Home</b>
             </a>
-            <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}"
+            <a href="{{ path('transactions', {'this_year' : this_year, 'this_month' : this_month}) }}"
                class="btn btn-outline-dark w-100 mb-2">
                 <span class="material-icons mr-1">shopping_cart</span>Transactions
             </a>
-            <a href="{{ path('summary', {'year' : current_year, 'month' : current_month}) }}"
+            <a href="{{ path('summary', {'this_year' : this_year, 'this_month' : this_month}) }}"
                class="btn btn-outline-dark w-100 mb-2">
                 <span class="material-icons mr-1">auto_graph</span>Summary
             </a>

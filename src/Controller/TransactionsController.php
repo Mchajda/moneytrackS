@@ -18,17 +18,17 @@ class TransactionsController extends AbstractController
     }
 
     /**
-     * @Route("/transactions/{year}/{month}", name="transactions")
+     * @Route("/transactions/{this_year}/{this_month}", name="transactions")
      */
-    public function index($year, $month): Response
+    public function index($this_year, $this_month): Response
     {
         $alert = "";
         $alert_class = "";
 
         return $this->render('transactions/index.html.twig', [
-            'current_year' => $year, 'current_month' => $month,
+            'current_year' => $this_year, 'current_month' => $this_month,
             'alert' => $alert, 'alert_class' => $alert_class,
-            'transactions' => $this->expensesProvider->getAllForMonthByUserId($this->getUser()->getId(), $year, $month, true),
+            'transactions' => $this->expensesProvider->getAllForMonthByUserId($this->getUser()->getId(), $this_year, $this_month, true),
         ]);
     }
 }

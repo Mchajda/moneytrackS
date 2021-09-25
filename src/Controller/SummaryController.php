@@ -18,7 +18,7 @@ class SummaryController extends AbstractController
     public function __construct(
         ExpensesProviderInterface $expensesProvider,
         CategoryProviderInterface $categoryProvider,
-        DateProvider $dateProvider
+        DateProvider              $dateProvider
     )
     {
         $this->dateProvider = $dateProvider;
@@ -27,36 +27,35 @@ class SummaryController extends AbstractController
     }
 
     /**
-     * @Route("/summary/{year}/{month}", name="summary")
+     * @Route("/summary/{this_year}/{this_month}", name="summary")
      */
-    public function index($year, $month): Response
+    public function index($this_year, $this_month): Response
     {
         $user = $this->getUser();
         $alert = "";
         $alert_class = "";
-        $dateData = $this->dateProvider->countPreviousMonth($year, $month);
-        dd($dateData);
+        $dateData = $this->dateProvider->countPreviousMonth($this_year, $this_month);
+        $previous_month = $dateData['previous_month']['month'];
+        $previous_year = $dateData['previous_month']['year'];
 
-        $current_year = $year;
-        $current_month = $month;
-
-        $this_month_expenses = $this->expensesProvider->getAllOrderedByMainCategoriesByUserId($user->getId(), $current_year, $current_month, true);
+        $this_month_expenses = $this->expensesProvider->getAllOrderedByMainCategoriesByUserId($user->getId(), $dateData['this_month']['year'], $dateData['this_month']['month'], true);
         $this_month_expenses_for_chart = array_values($this_month_expenses);
 
-        if($month <= 10)
-            $prev_month = "0".strval($month-1);
-        else $prev_month = strval($month-1);
+        if ($this_month <= 10)
+            $prev_month = "0" . strval($this_month - 1);
+        else $prev_month = strval($this_month - 1);
 
-        $previous_month_expenses = $this->expensesProvider->getAllOrderedByMainCategoriesByUserId($user->getId(), $current_year, $prev_month, true);
+        $previous_month_expenses = $this->expensesProvider->getAllOrderedByMainCategoriesByUserId($user->getId(), $dateData['this_month']['year'], $previous_month, true);
         $categories = $this->categoryProvider->getAllParentCategories();
         $categoriesLabels = $this->categoryProvider->getAllParentCategoriesNames();
         $categories_colors = $this->categoryProvider->getCategoriesColors();
 
         $months = ['1' => 'styczeń', '2' => 'luty', '3' => 'marzec', '4' => 'kwiecień', '5' => 'maj', '6' => 'czerwiec', '7' => 'lipiec', '8' => 'sierpień', '9' => 'wrzesień', '10' => 'październik', '11' => 'listopad', '12' => 'grudzień'];
-        $monthly_expenses = $this->expensesProvider->getMonthlyExpensesForYearByUser($user->getId(), $current_year);
+        $monthly_expenses = $this->expensesProvider->getMonthlyExpensesForYearByUser($user->getId(), $this_month);
 
         return $this->render('summary/index.html.twig', [
-            'current_year' => $year, 'current_month' => $month,
+            'this_year' => $this_year, 'this_month' => $this_month,
+            'previous_year' => $previous_year, 'previous_month' => $previous_month,
             'alert' => $alert, 'alert_class' => $alert_class,
             'categories' => $categories, 'this_month_expenses' => $this_month_expenses,
             'previous_month_expenses' => $previous_month_expenses,
