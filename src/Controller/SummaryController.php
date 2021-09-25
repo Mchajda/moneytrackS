@@ -31,14 +31,14 @@ class SummaryController extends AbstractController
         $current_year = $year;
         $current_month = $month;
 
-        $this_month_expenses = $this->expensesProvider->getAllOrderedByMainCategoriesByUserId($user->getId(), $current_year, $current_month);
+        $this_month_expenses = $this->expensesProvider->getAllOrderedByMainCategoriesByUserId($user->getId(), $current_year, $current_month, true);
         $this_month_expenses_for_chart = array_values($this_month_expenses);
 
         if($month <= 10)
             $prev_month = "0".strval($month-1);
         else $prev_month = strval($month-1);
 
-        $previous_month_expenses = $this->expensesProvider->getAllOrderedByMainCategoriesByUserId($user->getId(), $current_year, $prev_month);
+        $previous_month_expenses = $this->expensesProvider->getAllOrderedByMainCategoriesByUserId($user->getId(), $current_year, $prev_month, true);
         $categories = $this->categoryProvider->getAllParentCategories();
         $categories_colors = $this->categoryProvider->getCategoriesColors();
 

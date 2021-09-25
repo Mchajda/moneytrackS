@@ -1,85 +1,87 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Summary {{ current_month }}/{{ current_year }}{% endblock %}
-
 {% block sidemenu %}
-    <a href="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-outline-primary"><span class="material-icons">add</span>Add Expense</a>
+    <a href="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}"
+       class="btn btn-block btn-outline-primary"><span class="material-icons">add</span>Add Expense</a>
     <hr>
     <a href="{{ path('main') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">list</span>Home</a>
-    <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">shopping_cart</span>Transactions</a>
-    <a href="{{ path('summary', {'year' : current_year, 'month' : current_month}) }}" class="btn btn-block btn-primary text-left"><b><span class="material-icons mr-1">auto_graph</span>Summary</b></a>
+    <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}"
+       class="btn btn-block btn-light text-left"><span class="material-icons mr-1">shopping_cart</span>Transactions</a>
+    <a href="{{ path('summary', {'year' : current_year, 'month' : current_month}) }}"
+       class="btn btn-block btn-primary text-left"><b><span class="material-icons mr-1">auto_graph</span>Summary</b></a>
 {% endblock %}
-
 {% block body %}
-    <h2>Podsumowanie twoich wydatków miesiąca.</h2>
-    <hr>
+    <div class="container-lg container-fluid-md mt-4">
+        <h2>Podsumowanie twoich wydatków miesiąca.</h2>
+        <hr>
 
-    <div class="row">
-        <div class="col-3">
-            <h4>poprzedni miesiąc</h4>
-            {% for category in categories %}
+        <div class="row">
+            <div class="col-3">
+                <h4>poprzedni miesiąc</h4>
+                {% for category in categories %}
+                    <div class="d-flex justify-content-between">
+                        <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
+                        <div>{{ previous_month_expenses[category.categoryName] }} zł</div>
+                    </div>
+                    <hr>
+                {% endfor %}
                 <div class="d-flex justify-content-between">
-                    <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
-                    <div>{{ previous_month_expenses[category.categoryName] }} zł</div>
+                    <div>total:</div>
+                    <div></div>
                 </div>
-                <hr>
-            {% endfor %}
-            <div class="d-flex justify-content-between">
-                <div>total:</div>
-                <div></div>
             </div>
-        </div>
-        <div class="col-9">
-            <h4>ten miesiąc</h4>
-            {% for category in categories %}
+            <div class="col-9">
+                <h4>ten miesiąc</h4>
+                {% for category in categories %}
+                    <div class="d-flex justify-content-between">
+                        <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
+                        <div>{{ this_month_expenses[category.categoryName] }} zł</div>
+                    </div>
+                    <hr>
+                {% endfor %}
                 <div class="d-flex justify-content-between">
-                    <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
-                    <div>{{ this_month_expenses[category.categoryName] }} zł</div>
+                    <div>total:</div>
+                    <div></div>
                 </div>
-                <hr>
-            {% endfor %}
-            <div class="d-flex justify-content-between">
-                <div>total:</div>
-                <div></div>
             </div>
         </div>
-    </div>
 
-    <div class="d-flex justify-content-center">
-        <div>
-            <h3>Monthly expenses</h3>
-            <div class="mt-4" style="width: 60rem;">
-                <canvas id="thisMonthChart"></canvas>
+        <div class="d-flex justify-content-center">
+            <div>
+                <h3>Monthly expenses</h3>
+                <div class="mt-4" style="width: 60rem;">
+                    <canvas id="thisMonthChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div>
+                <h3>Monthly expenses</h3>
+                <div class="mt-4" style="width: 60rem;">
+                    <canvas id="monthsChart"></canvas>
+                </div>
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-center">
-        <div>
-            <h3>Monthly expenses</h3>
-            <div class="mt-4" style="width: 60rem;">
-                <canvas id="monthsChart"></canvas>
-            </div>
-        </div>
-    </div>
-
 {% endblock %}
-
 {% block javascripts %}
     <!-- Charts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+            integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+            crossorigin="anonymous"></script>
     <script>
         let thisMonthChart = document.getElementById('thisMonthChart').getContext('2d');
         let chart = new Chart(thisMonthChart, {
-            type:'doughnut',
-            data:{
+            type: 'doughnut',
+            data: {
                 labels:{{ categories_for_chart|json_encode()|raw }},
-                datasets:[{
-                    label:'',
+                datasets: [{
+                    label: '',
                     data:{{ expenses_for_chart|json_encode()|raw }},
                     backgroundColor: {{ categories_colors|json_encode()|raw }}
                 }]
             },
-            options:{
+            options: {
                 legend: {
                     display: true
                 }
@@ -88,16 +90,16 @@
 
         let monthsChart = document.getElementById('monthsChart').getContext('2d');
         let chart2 = new Chart(monthsChart, {
-            type:'bar',
-            data:{
+            type: 'bar',
+            data: {
                 labels:{{ months|json_encode()|raw }},
-                datasets:[{
-                    label:'',
+                datasets: [{
+                    label: '',
                     data:{{ monthly_expenses|json_encode() }},
                     backgroundColor: '#C4D0FB'
                 }]
             },
-            options:{
+            options: {
                 legend: {
                     display: false
                 }
