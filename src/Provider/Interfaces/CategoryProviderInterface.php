@@ -16,5 +16,7 @@ interface CategoryProviderInterface
 
     public function getAllParentCategories(): array;
 
+    public function getAllParentCategoriesNames(): array;
+
     public function getOneByName($category_name): ?Category;
 }

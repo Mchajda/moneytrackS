@@ -25,11 +25,10 @@ class CategoryProvider implements CategoryProviderInterface
     public function getAllCategoriesNames()
     {
         $categories_names = [];
-        $i=0;
+        $i = 0;
         $categories = $this->repository->findAll();
 
-        foreach($categories as $cat)
-        {
+        foreach ($categories as $cat) {
             $categories_names[$i] = $cat->getCategoryName();
             $i++;
         }
@@ -40,11 +39,10 @@ class CategoryProvider implements CategoryProviderInterface
     public function getCategoriesColors()
     {
         $categories_colors = [];
-        $i=0;
+        $i = 0;
         $categories = $this->repository->findAll();
 
-        foreach($categories as $cat)
-        {
+        foreach ($categories as $cat) {
             $categories_colors[$i] = $cat->getCategoryColor();
             $i++;
         }
@@ -54,17 +52,19 @@ class CategoryProvider implements CategoryProviderInterface
 
     public function getAllParentCategories(): array
     {
-        $categories = $this->repository->findBy([], ['sort_order' => 'ASC']);
-        $parents = [];
+        return $this->repository->findBy(['parent_category' => null], ['sort_order' => 'ASC']);
+    }
 
-        foreach($categories as $cat)
-        {
-            if ($cat->getParentCategory() == null) {
-                $parents[] = $cat;
-            }
+    public function getAllParentCategoriesNames(): array
+    {
+        $categories = $this->getAllParentCategories();
+        $return = [];
+
+        foreach ($categories as $cat) {
+            $return[] = $cat->getCategoryName();
         }
 
-        return $parents;
+        return $return;
     }
 
     public function getOneByName($category_name): ?Category

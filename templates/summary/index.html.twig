@@ -12,12 +12,11 @@
 {% endblock %}
 {% block body %}
     <div class="container-lg container-fluid-md mt-4">
-        <h2>Podsumowanie twoich wydatków miesiąca.</h2>
+        <h3 class="fw-bold">{{ current_year }}-{{ current_month }} summary</h3>
         <hr>
-
         <div class="row">
             <div class="col-3">
-                <h4>poprzedni miesiąc</h4>
+                <h4>{{ previous_year }}-{{ previous_month }}</h4>
                 {% for category in categories %}
                     <div class="d-flex justify-content-between">
                         <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
