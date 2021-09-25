@@ -10,7 +10,7 @@
                 {% for category in categories %}
                     <div class="d-flex justify-content-between">
                         <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
-                        <div>{{ previous_month_expenses[category.categoryName] }} zł</div>
+                        <div>{{ previous_month_expenses[category.categoryName]|number_format(2, ',', '.') }} PLN</div>
                     </div>
                     <hr>
                 {% endfor %}
@@ -24,7 +24,7 @@
                 {% for category in categories %}
                     <div class="d-flex justify-content-between">
                         <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
-                        <div>{{ this_month_expenses[category.categoryName] }} zł</div>
+                        <div>{{ this_month_expenses[category.categoryName]|number_format(2, ',', '.') }} PLN</div>
                     </div>
                     <hr>
                 {% endfor %}

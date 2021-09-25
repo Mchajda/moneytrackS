@@ -32,7 +32,7 @@
                     <td>{{ transaction.title }}</td>
                     <td>{{ transaction.category.categoryName }}</td>
                     <td>{{ transaction.recipient }}</td>
-                    <td>{{ transaction.amount }}</td>
+                    <td>{{ transaction.amount|number_format(2, ',', '.') }}</td>
                 </tr>
             {% endfor %}
             <tr>

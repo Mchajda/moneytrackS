@@ -153,9 +153,9 @@
                                         </div>
                                         <div>
                                             {% if expense.getDirection() == "income" %}
-                                                <span class="text-success">+{{ expense.getAmount() }} PLN</span>
+                                                <span class="text-success">+{{ expense.getAmount()|number_format(2, ',', '.') }} PLN</span>
                                             {% else %}
-                                                <span class="text-danger">-{{ expense.getAmount() }} PLN</span>
+                                                <span class="text-danger">-{{ expense.getAmount()|number_format(2, ',', '.') }} PLN</span>
                                             {% endif %}
                                         </div>
                                     </div>
