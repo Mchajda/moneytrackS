@@ -1,11 +1,5 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}MONEYTRACK | your profile{% endblock %}
-
-{% block sidemenu %}
-
-{% endblock %}
-
 {% block body %}
     <section class="container-lg container-fluid-md mt-4">
         <div class="row">
@@ -45,7 +39,7 @@
 
             <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="card card-body py-4 shadow">
-                    <h3>{{ current_year }}-{{ current_month }}</h3>
+                    <h3>{{ this_year }}-{{ this_month }}</h3>
                     <div>
                         <canvas id="expensesVsIncomesChart"></canvas>
                     </div>

@@ -1,15 +1,5 @@
 {% extends 'base.html.twig' %}
-{% block title %}Summary {{ this_month }}/{{ this_year }}{% endblock %}
-{% block sidemenu %}
-    <a href="{{ path('add_expense_form', {'this_year' : this_year, 'this_month' : this_month}) }}"
-       class="btn btn-block btn-outline-primary"><span class="material-icons">add</span>Add Expense</a>
-    <hr>
-    <a href="{{ path('main') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">list</span>Home</a>
-    <a href="{{ path('transactions', {'this_year' : this_year, 'this_month' : this_month}) }}"
-       class="btn btn-block btn-light text-left"><span class="material-icons mr-1">shopping_cart</span>Transactions</a>
-    <a href="{{ path('summary', {'this_year' : this_year, 'this_month' : this_month}) }}"
-       class="btn btn-block btn-primary text-left"><b><span class="material-icons mr-1">auto_graph</span>Summary</b></a>
-{% endblock %}
+{% block title %}MONEYTRACK | Summary {{ this_month }}/{{ this_year }}{% endblock %}
 {% block body %}
     <div class="container-lg container-fluid-md mt-4">
         <h3 class="fw-bold">{{ this_year }}-{{ this_month }} summary</h3>
@@ -64,6 +54,7 @@
     </div>
 {% endblock %}
 {% block javascripts %}
+    {{ parent() }}
     <!-- Charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
             integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
