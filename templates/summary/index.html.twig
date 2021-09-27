@@ -77,11 +77,18 @@
             type: 'bar',
             data: {
                 labels:{{ months|json_encode()|raw }},
-                datasets: [{
-                    label: '',
-                    data:{{ monthly_expenses|json_encode() }},
-                    backgroundColor: '#C4D0FB'
-                }]
+                datasets: [
+                    {
+                        label: 'expenses',
+                        data:{{ monthly_expenses|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                    {
+                        label: 'incomes',
+                        data:{{ monthly_incomes|json_encode() }},
+                        backgroundColor: '#c8fbc4'
+                    }
+                ]
             },
             options: {
                 legend: {
