@@ -56,7 +56,7 @@ class ExpenseRepository extends ServiceEntityRepository
      * @return Expense[] Returns an array of Expense objects
      */
 
-    public function getForYear($user_id, $year, $direction)
+    public function getForYear($user_id, $year, $direction, $amIPayer): array
     {
         $from = $year . '-01-01';
         $to = $year . '-12-31';
@@ -66,6 +66,8 @@ class ExpenseRepository extends ServiceEntityRepository
             ->setParameter('user_id', $user_id)
             ->andWhere('e.direction = :direction')
             ->setParameter('direction', $direction)
+            ->andWhere('e.amIPayer = :amIPayer')
+            ->setParameter('amIPayer', $amIPayer)
             ->andWhere('e.date BETWEEN :from AND :to')
             ->setParameter('from', $from)
             ->setParameter('to', $to)

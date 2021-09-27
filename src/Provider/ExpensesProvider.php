@@ -32,9 +32,9 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $this->repository->findBy(['user_id' => $user_id]);
     }
 
-    public function getAllForYearByUserId($user_id, $year): array
+    public function getAllForYearByUserId($user_id, $year, $amIPayer = true): array
     {
-        return $this->repository->getForYear($user_id, $year, "expense");
+        return $this->repository->getForYear($user_id, $year, "expense", $amIPayer);
     }
 
     public function getAllForMonthByUserId($user_id, $year, $month, $amIPayer): array
@@ -93,9 +93,9 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $this->repository->getLast($user_id, $num);
     }
 
-    public function getMonthlyExpensesForYearByUser($user_id, $year): array
+    public function getMonthlyExpensesForYearByUser($user_id, $year, $amIPayer = true): array
     {
-        $expenses = $this->getAllForYearByUserId($user_id, $year);
+        $expenses = $this->getAllForYearByUserId($user_id, $year, $amIPayer);
         //wydatki posegregowane na miesiace np do rocznego zestawienia
         $monthly_expenses = [];
 

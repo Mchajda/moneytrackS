@@ -8,7 +8,7 @@ interface ExpensesProviderInterface
 {
     public function getAllByUserId($user_id): array;
 
-    public function getAllForYearByUserId($user_id, $year): array;
+    public function getAllForYearByUserId($user_id, $year, $amIPayer): array;
 
     public function getAllForMonthByUserId($user_id, $year, $month, $amIPayer): array;
 
@@ -18,7 +18,7 @@ interface ExpensesProviderInterface
 
     public function getLastExpensesByUserId($user_id, $num): array;
 
-    public function getMonthlyExpensesForYearByUser($user_id, $year): array;
+    public function getMonthlyExpensesForYearByUser($user_id, $year, $amIPayer): array;
 
     public function getSumOfMonthExpensesByUserId($user_id, $year, $month): float;
 
