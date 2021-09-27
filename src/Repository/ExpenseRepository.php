@@ -88,8 +88,8 @@ class ExpenseRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->andWhere('e.user_id = :user_id')
             ->setParameter('user_id', $user_id)
-            ->orderBy('e.date', 'DESC')
             ->orderBy('e.created_at', 'DESC')
+            ->orderBy('e.date', 'DESC')
             ->setMaxResults($num)
             ->getQuery()
             ->getResult();
