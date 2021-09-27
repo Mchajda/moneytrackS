@@ -1,20 +1,9 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Your transactions{% endblock %}
-
-{% block sidemenu %}
-    <a href="{{ path('add_expense_form', {'year' : current_year, 'month' : current_month}) }}"
-       class="btn btn-block btn-outline-primary"><span class="material-icons">add</span>Add Expense</a>
-    <hr>
-    <a href="{{ path('main') }}" class="btn btn-block btn-light text-left"><span class="material-icons mr-1">list</span>Home</a>
-    <a href="{{ path('transactions', {'year' : current_year, 'month' : current_month}) }}"
-       class="btn btn-block btn-primary text-left"><b><span class="material-icons mr-1">shopping_cart</span>Transactions</b></a>
-    <a href="{{ path('summary', {'year' : 'NOW'|date('Y'), 'month' : 'NOW'|date('m')}) }}"
-       class="btn btn-block btn-light text-left"><span class="material-icons mr-1">auto_graph</span>Summary</a>
-{% endblock %}
-
+{% block title %}MONEYTRACK | your transactions{% endblock %}
+{% block stylesheets %}{{ parent() }}{% endblock %}
 {% block body %}
-    <section class="container-lg container-fluid-md mt-4">
+    <div class="card card-body shadow">
+        <h3 class="fw-bold mb-2">This month transactions</h3>
         <table class="table table-striped table-hover table-bordered table-sm">
             <thead class="table-dark">
             <tr>
@@ -44,5 +33,5 @@
             </tr>
             </tbody>
         </table>
-    </section>
+    </div>
 {% endblock %}

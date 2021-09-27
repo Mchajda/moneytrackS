@@ -1,55 +1,51 @@
 {% extends 'base.html.twig' %}
 {% block title %}MONEYTRACK | Summary {{ this_month }}/{{ this_year }}{% endblock %}
 {% block body %}
-    <section class="container-lg container-fluid-md mt-4">
-        <div class="card card-body shadow py-4 my-4">
-            <h3 class="fw-bold">{{ this_year }}-{{ this_month }} summary</h3>
-            <hr>
-            <div class="row">
-                <div class="col-lg-3 col-md-12">
-                    <h4>{{ previous_year }}-{{ previous_month }}</h4>
-                    {% for category in categories %}
-                        <div class="d-flex justify-content-between">
-                            <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
-                            <div>{{ previous_month_expenses[category.categoryName]|number_format(2, ',', '.') }} PLN</div>
-                        </div>
-                        <hr>
-                    {% endfor %}
+    <div class="card card-body shadow py-4 my-4">
+        <h3 class="fw-bold mb-0">{{ this_year }}-{{ this_month }} summary</h3>
+        <hr>
+        <div class="row">
+            <div class="col-lg-3 col-md-12">
+                <h4>{{ previous_year }}-{{ previous_month }}</h4>
+                {% for category in categories %}
                     <div class="d-flex justify-content-between">
-                        <div>total:</div>
-                        <div></div>
+                        <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
+                        <div>{{ previous_month_expenses[category.categoryName]|number_format(2, ',', '.') }}PLN
+                        </div>
                     </div>
+                    <hr>
+                {% endfor %}
+                <div class="d-flex justify-content-between">
+                    <div>total:</div>
+                    <div></div>
                 </div>
-                <div class="col-lg-9 col-md-12">
-                    <h4>ten miesiąc</h4>
-                    {% for category in categories %}
-                        <div class="d-flex justify-content-between">
-                            <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
-                            <div>{{ this_month_expenses[category.categoryName]|number_format(2, ',', '.') }} PLN</div>
-                        </div>
-                        <hr>
-                    {% endfor %}
+            </div>
+            <div class="col-lg-9 col-md-12">
+                <h4>ten miesiąc</h4>
+                {% for category in categories %}
                     <div class="d-flex justify-content-between">
-                        <div>total:</div>
-                        <div></div>
+                        <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
+                        <div>{{ this_month_expenses[category.categoryName]|number_format(2, ',', '.') }} PLN</div>
                     </div>
+                    <hr>
+                {% endfor %}
+                <div class="d-flex justify-content-between">
+                    <div>total:</div>
+                    <div></div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="">
-                <h3>Monthly expenses</h3>
-                <div class="mt-4" >
-                    <canvas id="thisMonthChart"></canvas>
-                </div>
-        </div>
-        <div class="">
-                <h3>Monthly expenses</h3>
-                <div class="mt-4" >
-                    <canvas id="monthsChart"></canvas>
-                </div>
-        </div>
-    </section>
+    <div class="card card-body shadow my-4">
+        <h3 class="fw-bold">Expenses by category in {{ this_year }}-{{ this_month }}</h3>
+        <canvas id="thisMonthChart"></canvas>
+    </div>
+
+    <div class="card card-body shadow my-4">
+        <h3 class="fw-bold">Monthly expenses in {{ this_year }}</h3>
+        <canvas id="monthsChart"></canvas>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

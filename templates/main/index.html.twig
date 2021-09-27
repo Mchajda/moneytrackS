@@ -1,58 +1,55 @@
 {% extends 'base.html.twig' %}
 {% block title %}MONEYTRACK | your profile{% endblock %}
 {% block body %}
-    <section class="container-lg container-fluid-md mt-4">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="card card-body shadow py-4">
-                    <h3>Twoje ostatnie transakcje</h3>
-                    {% for expense in expenses %}
-                        <div class="card card-body bg-light border pt-2 pb-2 my-2">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center">
-                                    <div class="border rounded-circle p-2">
-                                        <a href="#">
-                                            <img src="/assets/icons/{{ expense.getCategory().categoryName|slug }}.svg"
-                                                 class="img-fluid"
-                                                 style="width: 36px; height: 36px;">
-                                        </a>
-                                    </div>
-                                    <div class="pl-3">
-                                        <div class="d-flex flex-column">
-                                            <div class=""><b>{{ expense.getTitle() }}</b></div>
-                                            <div class=""><small>{{ expense.getDate() }}</small></div>
-                                        </div>
-                                    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="card card-body shadow py-4">
+                <h3 class="fw-bold">Your last transactions</h3>
+                {% for expense in expenses %}
+                    <div class="card card-body bg-light border py-2 my-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="border rounded-circle p-2">
+                                    <a href="#">
+                                        <img src="/assets/icons/{{ expense.getCategory().categoryName|slug }}.svg"
+                                             class="img-fluid"
+                                             style="width: 36px; height: 36px;">
+                                    </a>
                                 </div>
-                                <div>
-                                    {% if expense.getDirection() == "income" %}
-                                        <span class="text-success">+{{ expense.getAmount()|number_format(2, ',', '.') }} PLN</span>
-                                    {% else %}
-                                        <span class="text-danger">-{{ expense.getAmount()|number_format(2, ',', '.') }} PLN</span>
-                                    {% endif %}
+                                <div class="pl-3">
+                                    <div class="d-flex flex-column">
+                                        <div class=""><b>{{ expense.getTitle() }}</b></div>
+                                        <div class=""><small>{{ expense.getDate() }}</small></div>
+                                    </div>
                                 </div>
                             </div>
+                            <div>
+                                {% if expense.getDirection() == "income" %}
+                                    <span class="text-success">+{{ expense.getAmount()|number_format(2, ',', '.') }} PLN</span>
+                                {% else %}
+                                    <span class="text-danger">-{{ expense.getAmount()|number_format(2, ',', '.') }} PLN</span>
+                                {% endif %}
+                            </div>
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
+                {% endfor %}
             </div>
+        </div>
 
-            <div class="col-lg-6 col-md-6 col-sm-12">
-                <div class="card card-body py-4 shadow">
-                    <h3>{{ this_year }}-{{ this_month }}</h3>
-                    <div>
-                        <canvas id="expensesVsIncomesChart"></canvas>
-                    </div>
-                    <hr>
-                    <div>
-                        <canvas id="monthChart"></canvas>
-                    </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <div class="card card-body py-4 shadow">
+                <h3 class="fw-bold">{{ this_year }}-{{ this_month }}</h3>
+                <div>
+                    <canvas id="expensesVsIncomesChart"></canvas>
+                </div>
+                <hr>
+                <div>
+                    <canvas id="monthChart"></canvas>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 {% endblock %}
-
 {% block javascripts %}
     {{ parent() }}
     <!-- Charts -->
