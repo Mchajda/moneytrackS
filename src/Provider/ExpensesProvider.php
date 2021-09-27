@@ -32,9 +32,9 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $this->repository->findBy(['user_id' => $user_id]);
     }
 
-    public function getAllForYearByUserId($user_id, $year, $amIPayer = true): array
+    public function getAllForYearByUserId($user_id, $year, $direction = "expense", $amIPayer = true): array
     {
-        return $this->repository->getForYear($user_id, $year, "expense", $amIPayer);
+        return $this->repository->getForYear($user_id, $year, $direction, $amIPayer);
     }
 
     public function getAllForMonthByUserId($user_id, $year, $month, $amIPayer): array
@@ -61,6 +61,8 @@ class ExpensesProvider implements ExpensesProviderInterface
                     $this_month_expenses[$category->getCategoryName()] += $expense->getAmount();
                 }
             }
+            //number_format($this_month_expenses[$category->getCategoryName()], 2, ',', '.');
+            round($this_month_expenses[$category->getCategoryName()], 2);
         }
 
         return $this_month_expenses;
@@ -95,7 +97,7 @@ class ExpensesProvider implements ExpensesProviderInterface
 
     public function getMonthlyExpensesForYearByUser($user_id, $year, $amIPayer = true): array
     {
-        $expenses = $this->getAllForYearByUserId($user_id, $year, $amIPayer);
+        $expenses = $this->getAllForYearByUserId($user_id, $year, "expense", $amIPayer);
         //wydatki posegregowane na miesiace np do rocznego zestawienia
         $monthly_expenses = [];
 
@@ -110,6 +112,25 @@ class ExpensesProvider implements ExpensesProviderInterface
         }
 
         return $monthly_expenses;
+    }
+
+    public function getMonthlyIncomesForYearByUser($user_id, $year, $amIPayer = false): array
+    {
+        $incomes = $this->getAllForYearByUserId($user_id, $year, "income", $amIPayer);
+        //wydatki posegregowane na miesiace np do rocznego zestawienia
+        $monthly_incomes = [];
+
+        for ($i = 0; $i < 12; $i++) {
+            $monthly_sum = 0;
+            foreach ($incomes as $income) {
+                $date = DateTime::createFromFormat('Y-m-d', $income->getDate());
+                if ($date->format('n') == $i + 1)
+                    $monthly_sum += $income->getAmount();
+            }
+            $monthly_incomes[$i] = $monthly_sum;
+        }
+
+        return $monthly_incomes;
     }
 
     public function getSumOfMonthExpensesByUserId($user_id, $year, $month): float
