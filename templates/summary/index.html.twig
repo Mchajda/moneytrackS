@@ -1,45 +1,34 @@
 {% extends 'base.html.twig' %}
 {% block title %}MONEYTRACK | Summary {{ this_month }}/{{ this_year }}{% endblock %}
 {% block body %}
-    <div class="card card-body shadow py-4 my-4">
-        <h3 class="fw-bold mb-0">{{ this_year }}-{{ this_month }} summary</h3>
-        <hr>
-        <div class="row">
-            <div class="col-lg-3 col-md-12">
-                <h4>{{ previous_year }}-{{ previous_month }}</h4>
-                {% for category in categories %}
-                    <div class="d-flex justify-content-between">
-                        <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
-                        <div>{{ previous_month_expenses[category.categoryName]|number_format(2, ',', '.') }}PLN
+    <div class="row row-cols-lg-2 row-cols-md-1">
+        <div class="col">
+            <div class="card card-body shadow h-100">
+                <h3 class="fw-bold mb-0">{{ this_year }}-{{ this_month }} Summary</h3>
+                <hr>
+                <div>
+                    {% for category in categories %}
+                        <div class="d-flex justify-content-between">
+                            <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
+                            <div>{{ this_month_expenses[category.categoryName]|number_format(2, ',', '.') }} PLN</div>
                         </div>
-                    </div>
-                    <hr>
-                {% endfor %}
-                <div class="d-flex justify-content-between">
-                    <div>total:</div>
-                    <div></div>
-                </div>
-            </div>
-            <div class="col-lg-9 col-md-12">
-                <h4>ten miesiąc</h4>
-                {% for category in categories %}
+                        <hr>
+                    {% endfor %}
                     <div class="d-flex justify-content-between">
-                        <div><b><a class="text-dark" href="#">{{ category.categoryName }}</a></b>:</div>
-                        <div>{{ this_month_expenses[category.categoryName]|number_format(2, ',', '.') }} PLN</div>
+                        <div>total:</div>
+                        <div></div>
                     </div>
-                    <hr>
-                {% endfor %}
-                <div class="d-flex justify-content-between">
-                    <div>total:</div>
-                    <div></div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="card card-body shadow my-4">
-        <h3 class="fw-bold">Expenses by category in {{ this_year }}-{{ this_month }}</h3>
-        <canvas id="thisMonthChart"></canvas>
+        <div class="col mt-lg-0 mt-md-4 mt-sm-4 mt-4">
+            <div class="card card-body shadow h-100">
+                <h3 class="fw-bold">Expenses by category in {{ this_year }}-{{ this_month }}</h3>
+                <div class="h-100 d-flex align-items-center">
+                    <canvas id="thisMonthChart"></canvas>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="card card-body shadow my-4">
@@ -54,6 +43,31 @@
             integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
             crossorigin="anonymous"></script>
     <script>
+        let width = window.innerWidth;
+        let doughnut_legend_position = "chartArea";
+        if (width < 800) {
+            chart.options.legend.position = "bottom";
+        }
+        reportWindowSize = () => {
+            width = window.innerWidth;
+            if (width < 1250 && width > 1100) {
+                chart.options.legend.position = "bottom";
+            } else {
+                chart.options.legend.position = "chartArea";
+            }
+            console.log(width);
+        }
+
+        debounce = (func, timeout = 16) => {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => { func.apply(this, args); }, timeout);
+            };
+        }
+
+        window.onresize = debounce(() => reportWindowSize());
+
         let thisMonthChart = document.getElementById('thisMonthChart').getContext('2d');
         let chart = new Chart(thisMonthChart, {
             type: 'doughnut',
@@ -67,7 +81,8 @@
             },
             options: {
                 legend: {
-                    display: true
+                    display: true,
+                    position: doughnut_legend_position
                 }
             }
         });
