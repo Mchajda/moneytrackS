@@ -68,28 +68,6 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $this_month_expenses;
     }
 
-    public function getAllOrderedByCategoriesByUserId($user_id, $year, $month): array
-    {
-        $categories = $this->categoryProvider->getAllCategories();
-        if ($month == 0) //zabezpieczenie w przypadku previous month przypadku grudzien-styczen
-        {
-            $month = 12;
-            $year -= 1;
-        }
-
-        $this_month_expenses = [];
-        $expenses = $this->getAllForMonthByUserId($user_id, $year, $month);
-
-        foreach ($categories as $cat) {
-            $this_month_expenses[$cat->getCategoryName()] = 0;
-            foreach ($expenses as $expense) {
-                if ($expense->getCategory() == $cat->getCategoryName() && $expense->getDirection() == "expense")
-                    $this_month_expenses[$cat->getCategoryName()] += $expense->getAmount();
-            }
-        }
-        return $this_month_expenses;
-    }
-
     public function getLastExpensesByUserId($user_id, $num): array
     {
         return $this->repository->getLast($user_id, $num);
@@ -133,6 +111,7 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $monthly_incomes;
     }
 
+    //new functions
     public function getSumOfMonthExpensesByUserId($user_id, $year, $month): float
     {
         $sumExpenses = 0;
@@ -151,5 +130,32 @@ class ExpensesProvider implements ExpensesProviderInterface
             $sumIncomes += $income->getAmount();
         }
         return $sumIncomes;
+    }
+
+    public function getExpensesIncomesDiffForMonthByUserId($user_id, $year, $month): float
+    {
+        return $this->getSumOfMonthIncomesByUserId($user_id, $year, $month) - $this->getSumOfMonthExpensesByUserId($user_id, $year, $month);
+    }
+
+    public function getExpensesIncomesDiffAggregatedForYearByUserId($user_id, $year): array
+    {
+        $aggregatedDiff = [];
+        $monthsIndexes = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+
+        foreach ($monthsIndexes as $key => $monthIndex) {
+            if ($key == 0) {
+                $aggregatedDiff[] = $this->getExpensesIncomesDiffForMonthByUserId($user_id, $year, $monthIndex);
+            } else {
+                $aggregatedDiff[] = $this->getExpensesIncomesDiffForMonthByUserId($user_id, $year, $monthIndex) + $aggregatedDiff[$key - 1];
+            }
+        }
+        return $aggregatedDiff;
+    }
+
+    public function getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $category_name): array
+    {
+        $category = $this->categoryProvider->getOneByName($category_name);
+
+        $expenses = $this->repository->getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, "expense", $category->getId());
     }
 }

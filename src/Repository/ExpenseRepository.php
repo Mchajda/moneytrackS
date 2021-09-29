@@ -95,7 +95,29 @@ class ExpenseRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $direction, $category_id, $amIPayer = true): array
+    {
+        $numOfDays = date("t", mktime(0, 0, 0, $month, 3, $year));
+        $from = $year . '-' . $month . '-01';
+        $to = $year . '-' . $month . '-' . $numOfDays;
 
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.user_id = :user_id')
+            ->setParameter('user_id', $user_id)
+            ->andWhere('e.direction = :direction')
+            ->setParameter('direction', $direction)
+            ->andWhere('e.amIPayer = :amIPayer')
+            ->setParameter('amIPayer', $amIPayer)
+            ->andWhere('e.category_id = :category_id')
+            ->setParameter('$category_id', $category_id)
+            ->andWhere('e.date BETWEEN :from AND :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->orderBy('e.created_at', 'DESC')
+            ->orderBy('e.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return Expense[] Returns an array of Expense objects
     //  */

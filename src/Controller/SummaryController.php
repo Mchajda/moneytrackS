@@ -54,6 +54,9 @@ class SummaryController extends AbstractController
         $monthly_expenses = $this->expensesProvider->getMonthlyExpensesForYearByUser($user->getId(), $this_year);
         $monthly_incomes = $this->expensesProvider->getMonthlyIncomesForYearByUser($user->getId(), $this_year);
 
+        $this_month_diff = $this->expensesProvider->getExpensesIncomesDiffForMonthByUserId($user, $this_year, $this_month);
+        $this_year_diff_aggregated = $this->expensesProvider->getExpensesIncomesDiffAggregatedForYearByUserId($user, $this_year);
+
         return $this->render('summary/index.html.twig', [
             'this_year' => $this_year, 'this_month' => $this_month,
             'previous_year' => $previous_year, 'previous_month' => $previous_month,
@@ -62,6 +65,7 @@ class SummaryController extends AbstractController
             'previous_month_expenses' => $previous_month_expenses,
             'categories_for_chart' => $categoriesLabels, 'categories_colors' => $categories_colors, 'expenses_for_chart' => $this_month_expenses_for_chart,
             'months' => array_values($months), 'monthly_expenses' => $monthly_expenses, 'monthly_incomes' => $monthly_incomes,
+            'this_month_diff' => $this_month_diff, 'this_year_diff_aggregated' => $this_year_diff_aggregated
         ]);
     }
 }
