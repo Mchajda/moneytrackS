@@ -40,10 +40,7 @@ class SummaryController extends AbstractController
 
         $this_month_expenses = $this->expensesProvider->getAllOrderedByMainCategoriesByUserId($user->getId(), $dateData['this_month']['year'], $dateData['this_month']['month'], true);
         $this_month_expenses_for_chart = array_values($this_month_expenses);
-
-        if ($this_month <= 10)
-            $prev_month = "0" . strval($this_month - 1);
-        else $prev_month = strval($this_month - 1);
+        
 
         $previous_month_expenses = $this->expensesProvider->getAllOrderedByMainCategoriesByUserId($user->getId(), $dateData['this_month']['year'], $previous_month, true);
         $categories = $this->categoryProvider->getAllParentCategories();
