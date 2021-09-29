@@ -152,10 +152,26 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $aggregatedDiff;
     }
 
-    public function getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $category_name): array
+    public function countTransactionsValue(array $transactions): float
+    {
+        $transactionsValue = 0;
+
+        foreach ($transactions as $transaction) {
+            $transactionsValue += $transaction->getAmount();
+        }
+
+        return $transactionsValue;
+    }
+
+    public function getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $direction, $category_name): array
     {
         $category = $this->categoryProvider->getOneByName($category_name);
 
-        $expenses = $this->repository->getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, "expense", $category->getId());
+        $expenses = $this->repository->getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $direction, $category->getId());
+        $transactionsValue = $this->countTransactionsValue($expenses);
+        return [
+            'expenses' => $expenses,
+            'expenses_value' => $transactionsValue
+        ];
     }
 }

@@ -57,6 +57,8 @@ class SummaryController extends AbstractController
         $this_month_diff = $this->expensesProvider->getExpensesIncomesDiffForMonthByUserId($user, $this_year, $this_month);
         $this_year_diff_aggregated = $this->expensesProvider->getExpensesIncomesDiffAggregatedForYearByUserId($user, $this_year);
 
+        //dd($this->expensesProvider->getTransactionsForCategoryForMonthByUserId($user->getId(), $this_year, $this_month, "expense", "other"));
+
         return $this->render('summary/index.html.twig', [
             'this_year' => $this_year, 'this_month' => $this_month,
             'previous_year' => $previous_year, 'previous_month' => $previous_month,

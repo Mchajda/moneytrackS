@@ -28,4 +28,8 @@ interface ExpensesProviderInterface
     public function getExpensesIncomesDiffForMonthByUserId($user_id, $year, $month): float;
 
     public function getExpensesIncomesDiffAggregatedForYearByUserId($user_id, $year): array;
+
+    public function countTransactionsValue(array $transactions): float;
+
+    public function getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $direction, $category_name): array;
 }
