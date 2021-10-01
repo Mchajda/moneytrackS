@@ -37,12 +37,12 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $this->repository->getForYear($user_id, $year, $direction, $amIPayer);
     }
 
-    public function getAllForMonthByUserId($user_id, $year, $month, $amIPayer): array
+    public function getAllForMonthByUserId($user_id, $year, $month, $amIPayer = true): array
     {
         return $this->repository->getForDate($user_id, $year, $month, "expense", $amIPayer);
     }
 
-    public function getAllOrderedByMainCategoriesByUserId($user_id, $year, $month, $amIPayer): array
+    public function getAllOrderedByMainCategoriesByUserId($user_id, $year, $month, $amIPayer = true): array
     {
         if ($month == 0) //zabezpieczenie w przypadku previous month przypadku grudzien-styczen
         {
