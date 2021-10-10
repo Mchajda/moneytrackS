@@ -31,7 +31,6 @@ class ExpenseRequestProcessor implements ExpenseRequestProcessorInterface
         $date = $params['date'];
         $recipient = $params['recipient'];
         $amount = $params['amount'];
-        $direction = $params['direction'];
         $amIPayer = $params['payer'];
 
         return ExpenseFactory::create(
@@ -41,7 +40,6 @@ class ExpenseRequestProcessor implements ExpenseRequestProcessorInterface
             $category,
             $recipient,
             $amount,
-            $direction,
             $amIPayer
         );
     }
