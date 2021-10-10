@@ -40,11 +40,6 @@ class Expense
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $direction;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $date;
 
     /**
@@ -116,18 +111,6 @@ class Expense
     public function setAmount(float $amount): self
     {
         $this->amount = $amount;
-
-        return $this;
-    }
-
-    public function getDirection(): ?string
-    {
-        return $this->direction;
-    }
-
-    public function setDirection(string $direction): self
-    {
-        $this->direction = $direction;
 
         return $this;
     }

@@ -19,14 +19,71 @@ class ExpenseRepository extends ServiceEntityRepository
         parent::__construct($registry, Expense::class);
     }
 
+    //new function
+
+    /**
+     * @param $user_id
+     * @param $year
+     * @param $month
+     * @param bool $amIPayer
+     * @return Expense[] Returns an array of Expense objects
+     */
+    public function getExpensesForMonth($user_id, $year, $month, bool $amIPayer = true): array
+    {
+        $numOfDays = date("t", mktime(0, 0, 0, $month, 3, $year));
+        $from = $year . '-' . $month . '-01';
+        $to = $year . '-' . $month . '-' . $numOfDays;
+
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.user_id = :user_id')
+            ->setParameter('user_id', $user_id)
+            ->andWhere('e.amIPayer = :amIPayer')
+            ->setParameter('amIPayer', $amIPayer)
+            ->andWhere('e.date BETWEEN :from AND :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->andWhere('e.category != 25')
+            ->orderBy('e.created_at', 'DESC')
+            ->orderBy('e.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    //new function
+
+    /**
+     * @param $user_id
+     * @param $year
+     * @param $month
+     * @return Expense[] Returns an array of Expense objects
+     */
+    public function getIncomesForMonth($user_id, $year, $month): array
+    {
+        $numOfDays = date("t", mktime(0, 0, 0, $month, 3, $year));
+        $from = $year . '-' . $month . '-01';
+        $to = $year . '-' . $month . '-' . $numOfDays;
+
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.user_id = :user_id')
+            ->setParameter('user_id', $user_id)
+            ->andWhere('e.date BETWEEN :from AND :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->andWhere('e.category = 25')
+            ->orderBy('e.created_at', 'DESC')
+            ->orderBy('e.date', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @param $user_id
      * @param $year
      * @param $month
      * @param $direction
+     * @param bool $amIPayer
      * @return Expense[] Returns an array of Expense objects
      */
-
     public function getForDate($user_id, $year, $month, $direction, $amIPayer = true): array
     {
         $numOfDays = date("t", mktime(0, 0, 0, $month, 3, $year));
@@ -36,7 +93,7 @@ class ExpenseRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->andWhere('e.user_id = :user_id')
             ->setParameter('user_id', $user_id)
-            ->andWhere('e.direction = :direction')
+            ->andWhere('e.category_id = :direction')
             ->setParameter('direction', $direction)
             ->andWhere('e.amIPayer = :amIPayer')
             ->setParameter('amIPayer', $amIPayer)
@@ -53,9 +110,9 @@ class ExpenseRepository extends ServiceEntityRepository
      * @param $user_id
      * @param $year
      * @param $direction
+     * @param $amIPayer
      * @return Expense[] Returns an array of Expense objects
      */
-
     public function getForYear($user_id, $year, $direction, $amIPayer): array
     {
         $from = $year . '-01-01';
@@ -64,7 +121,7 @@ class ExpenseRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->andWhere('e.user_id = :user_id')
             ->setParameter('user_id', $user_id)
-            ->andWhere('e.direction = :direction')
+            ->andWhere('e.category_id = :direction')
             ->setParameter('direction', $direction)
             ->andWhere('e.amIPayer = :amIPayer')
             ->setParameter('amIPayer', $amIPayer)
@@ -104,7 +161,7 @@ class ExpenseRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->andWhere('e.user_id = :user_id')
             ->setParameter('user_id', $user_id)
-            ->andWhere('e.direction = :direction')
+            ->andWhere('e.category_id = :direction')
             ->setParameter('direction', $direction)
             ->andWhere('e.amIPayer = :amIPayer')
             ->setParameter('amIPayer', $amIPayer)
