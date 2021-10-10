@@ -32,17 +32,22 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $this->repository->findBy(['user_id' => $user_id]);
     }
 
-    public function getAllForYearByUserId($user_id, $year, $direction = "expense", $amIPayer = true): array
+    public function getExpensesForYearByUserId($user_id, $year, $amIPayer = true): array
     {
-        return $this->repository->getForYear($user_id, $year, $direction, $amIPayer);
+        return $this->repository->getExpensesForYearByUserId($user_id, $year, $amIPayer);
     }
 
-    public function getAllForMonthByUserId($user_id, $year, $month, $amIPayer): array
+    public function getExpensesForMonthByUserId($user_id, $year, $month, $amIPayer = true): array
     {
-        return $this->repository->getForDate($user_id, $year, $month, "expense", $amIPayer);
+        return $this->repository->getExpensesForMonth($user_id, $year, $month, $amIPayer);
     }
 
-    public function getAllOrderedByMainCategoriesByUserId($user_id, $year, $month, $amIPayer): array
+    public function getIncomesForMonthByUserId($user_id, $year, $month): array
+    {
+        return $this->repository->getIncomesForMonth($user_id, $year, $month);
+    }
+
+    public function getAllOrderedByMainCategoriesByUserId($user_id, $year, $month, $amIPayer = true): array
     {
         if ($month == 0) //zabezpieczenie w przypadku previous month przypadku grudzien-styczen
         {
@@ -51,7 +56,7 @@ class ExpensesProvider implements ExpensesProviderInterface
         }
 
         $categories = $this->categoryProvider->getAllParentCategories();
-        $expenses = $this->getAllForMonthByUserId($user_id, $year, $month, $amIPayer);
+        $expenses = $this->getExpensesForMonthByUserId($user_id, $year, $month, $amIPayer);
         $this_month_expenses = [];
 
         foreach ($categories as $category) {
@@ -61,7 +66,6 @@ class ExpensesProvider implements ExpensesProviderInterface
                     $this_month_expenses[$category->getCategoryName()] += $expense->getAmount();
                 }
             }
-            //number_format($this_month_expenses[$category->getCategoryName()], 2, ',', '.');
             round($this_month_expenses[$category->getCategoryName()], 2);
         }
 
@@ -70,12 +74,12 @@ class ExpensesProvider implements ExpensesProviderInterface
 
     public function getLastExpensesByUserId($user_id, $num): array
     {
-        return $this->repository->getLast($user_id, $num);
+        return $this->repository->getLastNumberOfTransactions($user_id, $num);
     }
 
     public function getMonthlyExpensesForYearByUser($user_id, $year, $amIPayer = true): array
     {
-        $expenses = $this->getAllForYearByUserId($user_id, $year, "expense", $amIPayer);
+        $expenses = $this->getExpensesForYearByUserId($user_id, $year, $amIPayer);
         //wydatki posegregowane na miesiace np do rocznego zestawienia
         $monthly_expenses = [];
 
@@ -94,7 +98,7 @@ class ExpensesProvider implements ExpensesProviderInterface
 
     public function getMonthlyIncomesForYearByUser($user_id, $year, $amIPayer = false): array
     {
-        $incomes = $this->getAllForYearByUserId($user_id, $year, "income", $amIPayer);
+        $incomes = $this->getIncomesForMonthByUserId($user_id, $year, $amIPayer);
         //wydatki posegregowane na miesiace np do rocznego zestawienia
         $monthly_incomes = [];
 
@@ -115,7 +119,7 @@ class ExpensesProvider implements ExpensesProviderInterface
     public function getSumOfMonthExpensesByUserId($user_id, $year, $month): float
     {
         $sumExpenses = 0;
-        $expenses = $this->repository->getForDate($user_id, $year, $month, "expense");
+        $expenses = $this->getExpensesForMonthByUserId($user_id, $year, $month, true);
         foreach ($expenses as $expense) {
             $sumExpenses += $expense->getAmount();
         }
@@ -125,7 +129,7 @@ class ExpensesProvider implements ExpensesProviderInterface
     public function getSumOfMonthIncomesByUserId($user_id, $year, $month): float
     {
         $sumIncomes = 0;
-        $incomes = $this->repository->getForDate($user_id, $year, $month, "income", false);
+        $incomes = $this->getIncomesForMonthByUserId($user_id, $year, $month);
         foreach ($incomes as $income) {
             $sumIncomes += $income->getAmount();
         }

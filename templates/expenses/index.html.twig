@@ -2,18 +2,79 @@
 {% block title %}MONEYTRACK | add expense{% endblock %}
 {% block stylesheets %}{{ parent() }}{% endblock %}
 {% block body %}
-        <div class="row">
-            <div class="col-md-6 col-sm-12">
-                <div class="card card-body shadow">
-                    <h3 class="fw-bold m-0">Add expense</h3>
-                    <hr>
-                    <form action="{{ path('add_expense_form', {'this_year' : this_year, 'this_month' : this_month}) }}"
-                          enctype="multipart/form-data" method="post">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="card card-body shadow">
+                <h3 class="fw-bold m-0">Add expense</h3>
+                <hr>
+                <form action="{{ path('add_expense_form', {'this_year' : this_year, 'this_month' : this_month}) }}"
+                      enctype="multipart/form-data" method="post">
+
+                    <div class="row mb-3">
+                        <label for="title" class="col-sm-3 col-form-label">Title</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" name="title" id="title" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9 d-flex">
+                            <div class="form-check p-0 w-100">
+                                <input class="form-check-input" type="radio" name="direction" id="expense"
+                                       value="expense" checked>
+                                <label class="form-check-label radio-button pt-3 pb-3" for="expense">
+                                    Expense <img src="/assets/icons/expenseRadio.svg" class="img-fluid">
+                                </label>
+                            </div>
+                            <div class="form-check p-0 w-100">
+                                <input class="form-check-input" type="radio" name="direction" id="income"
+                                       value="income">
+                                <label class="form-check-label radio-button pt-3 pb-3" for="income">
+                                    Income <img src="/assets/icons/incomeRadio.svg" class="img-fluid">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="date" class="col-sm-3 col-form-label">Date</label>
+                        <div class="col-sm-9">
+                            <input type="date" class="form-control" name="date" id="date"
+                                   value="{{ this_year }}-{{ this_month }}-{{ this_day }}"
+                                   required
+                            >
+                        </div>
+                    </div>
+
+                    <div class="expense-fields" id="expense-fields">
+                        <div class="row mb-3">
+                            <label for="category" class="col-sm-3 col-form-label">Category</label>
+                            <div class="col-sm-9">
+                                <select class="form-control expense-field" id="category" name="category">
+                                    {% for cat in categories %}
+                                        {% if cat.getCategories is not empty %}
+                                            <optgroup label="{{ cat.getCategoryName() }}">
+                                                <option value="{{ cat.getCategoryName() }}">
+                                                    <b>{{ cat.getCategoryName() }}</b></option>
+                                                {% for subCat in cat.getCategories %}
+                                                    <option value="{{ subCat.getCategoryName() }}" {{ loop.first ? 'id="default"' : '' }}>{{ subCat.getCategoryName() }}</option>
+                                                {% endfor %}
+                                            </optgroup>
+                                        {% elseif cat.getCategories is empty and cat.parentCategory is null %}
+                                            <option value="{{ cat.getCategoryName() }}" {{ loop.first ? 'id="default"' : '' }}>{{ cat.getCategoryName() }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
 
                         <div class="row mb-3">
-                            <label for="title" class="col-sm-3 col-form-label">Title</label>
+                            <label for="recipient" class="col-sm-3 col-form-label">Recipient</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="title" id="title" required>
+                                <input type="text" class="form-control expense-field" name="recipient"
+                                       id="recipient"
+                                       value="other" required>
                             </div>
                         </div>
 
@@ -21,153 +82,92 @@
                             <label for="" class="col-sm-3 col-form-label"></label>
                             <div class="col-sm-9 d-flex">
                                 <div class="form-check p-0 w-100">
-                                    <input class="form-check-input" type="radio" name="direction" id="expense"
-                                           value="expense" checked>
-                                    <label class="form-check-label radio-button pt-3 pb-3" for="expense">
-                                        Expense <img src="/assets/icons/expenseRadio.svg" class="img-fluid">
+                                    <input class="form-check-input" type="radio" name="payer" id="self"
+                                           value="self" checked>
+                                    <label class="form-check-label radio-button pt-3 pb-3" for="self">
+                                        Self <img src="/assets/icons/payer.svg" class="img-fluid">
                                     </label>
                                 </div>
                                 <div class="form-check p-0 w-100">
-                                    <input class="form-check-input" type="radio" name="direction" id="income"
-                                           value="income">
-                                    <label class="form-check-label radio-button pt-3 pb-3" for="income">
-                                        Income <img src="/assets/icons/incomeRadio.svg" class="img-fluid">
+                                    <input class="form-check-input" type="radio" name="payer" id="notSelf"
+                                           value="notSelf">
+                                    <label class="form-check-label radio-button pt-3 pb-3" for="notSelf">
+                                        Not self <img src="/assets/icons/notPayer.svg" class="img-fluid">
                                     </label>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="date" class="col-sm-3 col-form-label">Date</label>
-                            <div class="col-sm-9">
-                                <input type="date" class="form-control" name="date" id="date"
-                                       value="{{ this_year }}-{{ this_month }}-{{ this_day }}"
-                                       required
-                                >
-                            </div>
+                    <div class="row mb-3">
+                        <label for="amount" class="col-sm-3 col-form-label">Amount</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control" name="amount" id="amount" step="0.01"
+                                   required>
                         </div>
+                    </div>
 
-                        <div class="expense-fields" id="expense-fields">
-                            <div class="row mb-3">
-                                <label for="category" class="col-sm-3 col-form-label">Category</label>
-                                <div class="col-sm-9">
-                                    <select class="form-control expense-field" id="category" name="category">
-                                        {% for cat in categories %}
-                                            {% if cat.getCategories is not empty %}
-                                                <optgroup label="{{ cat.getCategoryName() }}">
-                                                    <option value="{{ cat.getCategoryName() }}">
-                                                        <b>{{ cat.getCategoryName() }}</b></option>
-                                                    {% for subCat in cat.getCategories %}
-                                                        <option value="{{ subCat.getCategoryName() }}">{{ subCat.getCategoryName() }}</option>
-                                                    {% endfor %}
-                                                </optgroup>
-                                            {% elseif cat.getCategories is empty and cat.parentCategory is null %}
-                                                <option value="{{ cat.getCategoryName() }}">{{ cat.getCategoryName() }}</option>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="recipient" class="col-sm-3 col-form-label">Recipient</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control expense-field" name="recipient"
-                                           id="recipient"
-                                           value="other" required>
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="" class="col-sm-3 col-form-label"></label>
-                                <div class="col-sm-9 d-flex">
-                                    <div class="form-check p-0 w-100">
-                                        <input class="form-check-input" type="radio" name="payer" id="self"
-                                               value="self" checked>
-                                        <label class="form-check-label radio-button pt-3 pb-3" for="self">
-                                            Self <img src="/assets/icons/payer.svg" class="img-fluid">
-                                        </label>
-                                    </div>
-                                    <div class="form-check p-0 w-100">
-                                        <input class="form-check-input" type="radio" name="payer" id="notSelf"
-                                               value="notSelf">
-                                        <label class="form-check-label radio-button pt-3 pb-3" for="notSelf">
-                                            Not self <img src="/assets/icons/notPayer.svg" class="img-fluid">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="row mb-3">
+                        <label for="amount" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9 d-grid">
+                            <button type="submit" class="btn btn-primary btn-sm">Save</button>
                         </div>
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="amount" class="col-sm-3 col-form-label">Amount</label>
-                            <div class="col-sm-9">
-                                <input type="number" class="form-control" name="amount" id="amount" step="0.01"
-                                       required>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="amount" class="col-sm-3 col-form-label"></label>
-                            <div class="col-sm-9 d-grid">
-                                <button type="submit" class="btn btn-primary btn-sm">Save</button>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-md-6 col-sm-12">
-                <div class="card card-body shadow">
-                    <h3 class="fw-bold">Your last transactions</h3>
-                    {% for expense in expenses %}
-                        <div class="card card-body bg-light border py-2 my-2">
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center">
-                                    <div class="border rounded-circle p-2">
-                                        <a href="#">
-                                            <img src="/assets/icons/{{ expense.getCategory().categoryName|slug }}.svg"
-                                                 class="img-fluid" style="width: 36px; height: 36px;">
-                                        </a>
-                                    </div>
-                                    <div class="pl-3">
-                                        <div class="d-flex flex-column">
-                                            <div class=""><b>{{ expense.getTitle() }}</b></div>
-                                            <div class=""><small>{{ expense.getDate() }}</small></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    {% if expense.getDirection() == "income" %}
-                                        <span class="text-success">+{{ expense.getAmount()|number_format(2, ',', '.') }} PLN</span>
-                                    {% else %}
-                                        <span class="text-danger">-{{ expense.getAmount()|number_format(2, ',', '.') }} PLN</span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+                </form>
             </div>
         </div>
+
+        <div class="col-md-6 col-sm-12">
+            <div class="card card-body shadow">
+                <h3 class="fw-bold">Your last transactions</h3>
+                {% for expense in expenses %}
+                    <div class="card card-body bg-light border py-2 my-2">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="border rounded-circle p-2">
+                                    <a href="#">
+                                        <img src="/assets/icons/{{ expense.getCategory().categoryName|slug }}.svg"
+                                             class="img-fluid" style="width: 36px; height: 36px;">
+                                    </a>
+                                </div>
+                                <div class="pl-3">
+                                    <div class="d-flex flex-column">
+                                        <div class=""><b>{{ expense.getTitle() }}</b></div>
+                                        <div class=""><small>{{ expense.getDate() }}</small></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                {% if expense.category.id == 25 %}
+                                    <span class="text-success">+{{ expense.getAmount()|number_format(2, ',', '.') }} PLN</span>
+                                {% else %}
+                                    <span class="text-danger">-{{ expense.getAmount()|number_format(2, ',', '.') }} PLN</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script>
         const expenseRadio = document.querySelector("input[id=expense]");
         const incomeRadio = document.querySelector("input[id=income]");
+        const categorySelectOption = document.querySelector("option[id=default]");
 
         expenseRadio.addEventListener('change', (event) => {
             if (document.querySelector("input[id=expense]").checked) {
                 document.getElementById('expense-fields').style.display = 'block';
-                console.log(document.querySelectorAll('.expense-field'));
 
                 const expenseDivs = document.querySelectorAll('.expense-fields');
                 [].forEach.call(expenseDivs, function (div) {
                     div.style.display = 'block';
                 });
+                categorySelectOption.value = categorySelectOption.textContent;
             }
         });
 
@@ -179,6 +179,7 @@
                 [].forEach.call(expenseDivs, function (div) {
                     div.style.display = 'none';
                 });
+                categorySelectOption.value = "income";
             }
         });
     </script>

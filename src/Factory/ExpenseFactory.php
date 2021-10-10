@@ -15,7 +15,6 @@ class ExpenseFactory
         $category,
         $recipient,
         $amount,
-        $direction,
         $amIPayer
     )
     {
@@ -27,13 +26,12 @@ class ExpenseFactory
         $expense->setCategory($category);
         $expense->setRecipient($recipient);
         $expense->setAmount($amount);
-        $expense->setDirection($direction);
 
-        if ($direction == "expense" && $amIPayer == "self") {
+        if ($category->getId() != 25 && $amIPayer == "self") {
             $expense->setAmIPayer(true);
-        } else if ($direction == "expense" && $amIPayer != "self") {
+        } else if ($category->getId() != 25 && $amIPayer != "self") {
             $expense->setAmIPayer(false);
-        } else if ($direction == "income") {
+        } else if ($category->getId() == 25) {
             $expense->setAmIPayer(false);
         }
 

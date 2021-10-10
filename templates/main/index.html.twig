@@ -24,7 +24,7 @@
                                 </div>
                             </div>
                             <div>
-                                {% if expense.getDirection() == "income" %}
+                                {% if expense.getCategory().id == 25 %}
                                     <span class="text-success">+{{ expense.getAmount()|number_format(2, ',', '.') }} PLN</span>
                                 {% else %}
                                     <span class="text-danger">-{{ expense.getAmount()|number_format(2, ',', '.') }} PLN</span>
