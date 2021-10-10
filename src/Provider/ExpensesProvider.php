@@ -32,9 +32,9 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $this->repository->findBy(['user_id' => $user_id]);
     }
 
-    public function getAllForYearByUserId($user_id, $year, $direction = "expense", $amIPayer = true): array
+    public function getExpensesForYearByUserId($user_id, $year, $amIPayer = true): array
     {
-        return $this->repository->getForYear($user_id, $year, $direction, $amIPayer);
+        return $this->repository->getExpensesForYearByUserId($user_id, $year, $amIPayer);
     }
 
     public function getExpensesForMonthByUserId($user_id, $year, $month, $amIPayer = true): array
@@ -66,7 +66,6 @@ class ExpensesProvider implements ExpensesProviderInterface
                     $this_month_expenses[$category->getCategoryName()] += $expense->getAmount();
                 }
             }
-            //number_format($this_month_expenses[$category->getCategoryName()], 2, ',', '.');
             round($this_month_expenses[$category->getCategoryName()], 2);
         }
 
@@ -75,12 +74,12 @@ class ExpensesProvider implements ExpensesProviderInterface
 
     public function getLastExpensesByUserId($user_id, $num): array
     {
-        return $this->repository->getLast($user_id, $num);
+        return $this->repository->getLastNumberOfTransactions($user_id, $num);
     }
 
     public function getMonthlyExpensesForYearByUser($user_id, $year, $amIPayer = true): array
     {
-        $expenses = $this->getAllForYearByUserId($user_id, $year, "expense", $amIPayer);
+        $expenses = $this->getExpensesForYearByUserId($user_id, $year, $amIPayer);
         //wydatki posegregowane na miesiace np do rocznego zestawienia
         $monthly_expenses = [];
 
@@ -99,7 +98,7 @@ class ExpensesProvider implements ExpensesProviderInterface
 
     public function getMonthlyIncomesForYearByUser($user_id, $year, $amIPayer = false): array
     {
-        $incomes = $this->getAllForYearByUserId($user_id, $year, "income", $amIPayer);
+        $incomes = $this->getIncomesForMonthByUserId($user_id, $year, $amIPayer);
         //wydatki posegregowane na miesiace np do rocznego zestawienia
         $monthly_incomes = [];
 
