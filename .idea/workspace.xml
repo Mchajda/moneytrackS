@@ -5,23 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fdc1689e-9703-4089-b978-f41600036152" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/moneytrackS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/moneytrackS.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20201114233001.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210124103503.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210124125828.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210124141107.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210124141745.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210128145302.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Version20210914184824.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Expense.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Expense.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Provider/ExpensesProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Provider/ExpensesProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ExpenseRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ExpenseRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/main/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/main/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +160,7 @@
       <workItem from="1632936112954" duration="6253000" />
       <workItem from="1633265245547" duration="76000" />
       <workItem from="1633429523068" duration="74000" />
-      <workItem from="1633891826070" duration="4282000" />
+      <workItem from="1633891826070" duration="4515000" />
     </task>
     <servers />
   </component>
