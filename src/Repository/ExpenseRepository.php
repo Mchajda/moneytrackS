@@ -134,6 +134,31 @@ class ExpenseRepository extends ServiceEntityRepository
 
     /**
      * @param $user_id
+     * @param $year
+     * @return Expense[] Returns an array of Expense objects
+     */
+    public function getIncomesForYearByUserId($user_id, $year): array
+    {
+        $from = $year . '-01-01';
+        $to = $year . '-12-31';
+
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.user_id = :user_id')
+            ->setParameter('user_id', $user_id)
+            ->andWhere('e.category = 25')
+            ->andWhere('e.amIPayer = :amIPayer')
+            ->setParameter('amIPayer', false)
+            ->andWhere('e.date BETWEEN :from AND :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->orderBy('e.date', 'DESC')
+            ->orderBy('e.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $user_id
      * @param $num
      * @return Expense[] Returns an array of Expense objects
      */
