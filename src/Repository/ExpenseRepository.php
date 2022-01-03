@@ -175,7 +175,7 @@ class ExpenseRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $direction, $category_id, $amIPayer = true): array
+    public function getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $category_id, $amIPayer = true): array
     {
         $numOfDays = date("t", mktime(0, 0, 0, $month, 3, $year));
         $from = $year . '-' . $month . '-01';
@@ -184,10 +184,6 @@ class ExpenseRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->andWhere('e.user_id = :user_id')
             ->setParameter('user_id', $user_id)
-            ->andWhere('e.category_id = :direction')
-            ->setParameter('direction', $direction)
-            ->andWhere('e.amIPayer = :amIPayer')
-            ->setParameter('amIPayer', $amIPayer)
             ->andWhere('e.category = :category_id')
             ->setParameter('category_id', $category_id)
             ->andWhere('e.date BETWEEN :from AND :to')

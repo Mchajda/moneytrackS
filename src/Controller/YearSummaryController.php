@@ -33,11 +33,13 @@ class YearSummaryController extends AbstractController
     {
         $alert = $request->request->get('alert');
         $alertClass = $request->request->get('alert-class');
-        $user = $this->getUser();
+        $userId = $this->getUser()->getId();
         $todayDate = $this->dateProvider->getTodayDate();
 
-        $yearTotalIncomes = $this->expenseProvider->getSumOfIncomesForYearByUserId($user->getId(), $year);
-        $yearTotalExpenses = $this->expenseProvider->getSumOfExpensesForYearByUserId($user->getId(), $year);
+        $yearTotalIncomes = $this->expenseProvider->getSumOfIncomesForYearByUserId($userId, $year);
+        $yearTotalExpenses = $this->expenseProvider->getSumOfExpensesForYearByUserId($userId, $year);
+
+dd($this->expenseProvider->getTransactionsForCategoryForMonthByUserId($userId, $year, 1, 1));
 
         return $this->render('year_summary/index.html.twig', [
             'alert' => $alert, 'alertClass' => $alertClass,

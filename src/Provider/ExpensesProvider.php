@@ -179,15 +179,23 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $transactionsValue;
     }
 
-    public function getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $direction, $category_name): array
+    public function getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $category_name): array
     {
         $category = $this->categoryProvider->getOneByName($category_name);
 
-        $expenses = $this->repository->getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $direction, $category->getId());
+        $expenses = $this->repository->getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $category);
         $transactionsValue = $this->countTransactionsValue($expenses);
         return [
             'expenses' => $expenses,
             'expenses_value' => $transactionsValue
         ];
     }
+
+//    public function getTransactionsByMonthsForWholeYear($user_id, $year): array
+//    {
+//        $yearExpenses = $this->getExpensesForYearByUserId($user_id, $year);
+//        $yearIncomes = $this->getIncomesForYearByUserId($user_id, $year);
+//
+//        foreach ($yearExpenses as $expense)
+//    }
 }
