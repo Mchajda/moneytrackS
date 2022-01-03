@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/src/Provider/ExpensesProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Provider/ExpensesProvider.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Provider/Interfaces/ExpensesProviderInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Provider/Interfaces/ExpensesProviderInterface.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/ExpenseRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ExpenseRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/year_summary/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/year_summary/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +169,7 @@
       <workItem from="1633971184194" duration="10000" />
       <workItem from="1634235432346" duration="2691000" />
       <workItem from="1634277973678" duration="1034000" />
-      <workItem from="1641217309201" duration="4415000" />
+      <workItem from="1641217309201" duration="9253000" />
     </task>
     <servers />
   </component>

@@ -183,7 +183,7 @@ class ExpensesProvider implements ExpensesProviderInterface
     {
         $category = $this->categoryProvider->getOneByName($category_name);
 
-        $expenses = $this->repository->getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $category);
+        $expenses = $this->repository->getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $category->getId());
         $transactionsValue = $this->countTransactionsValue($expenses);
         return [
             'expenses' => $expenses,
@@ -191,11 +191,25 @@ class ExpensesProvider implements ExpensesProviderInterface
         ];
     }
 
-//    public function getTransactionsByMonthsForWholeYear($user_id, $year): array
-//    {
-//        $yearExpenses = $this->getExpensesForYearByUserId($user_id, $year);
-//        $yearIncomes = $this->getIncomesForYearByUserId($user_id, $year);
-//
-//        foreach ($yearExpenses as $expense)
-//    }
+    public function getTransactionsByMonthsForWholeYear($user_id, $year): array
+    {
+        $categories = $this->categoryProvider->getAllCategories();
+        $yearCategorySummary = [];
+        $result = [];
+
+        foreach ($categories as $category) {
+            for ($i = 1; $i <= 12; $i++) {
+                if ($i < 10)
+                    $month = "0".$i;
+                else $month = strval($i);
+
+                $transactions = $this->getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $category->getCategoryName());
+                $yearCategorySummary[] = $transactions['expenses_value'];
+            }
+            $result[$category->getCategoryName()] = $yearCategorySummary;
+            $yearCategorySummary = [];
+        }
+
+        return $result;
+    }
 }

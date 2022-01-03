@@ -38,4 +38,6 @@ interface ExpensesProviderInterface
     public function countTransactionsValue(array $transactions): float;
 
     public function getTransactionsForCategoryForMonthByUserId($user_id, $year, $month, $category_name): array;
+
+    public function getTransactionsByMonthsForWholeYear($user_id, $year): array;
 }

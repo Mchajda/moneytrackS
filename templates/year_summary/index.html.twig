@@ -2,10 +2,115 @@
 {% block title %}MONEYTRACK | {{ year }} SUMMARY{% endblock %}
 {% block stylesheets %}{{ parent() }}{% endblock %}
 {% block body %}
-    <div class="card card-body shadow">
+    <div class="card card-body shadow mb-4">
         <h3 class="fw-bold">{{ year }} Summary</h3>
         <div>
             <canvas id="expensesVsIncomesChart"></canvas>
+        </div>
+    </div>
+    <hr>
+    <div class="card card-body shadow mb-4 ">
+        <h3 class="fw-bold">Food</h3>
+        <div>
+            <canvas id="foodChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Eating out</h3>
+        <div>
+            <canvas id="eatingOutChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Groceries</h3>
+        <div>
+            <canvas id="groceriesChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Alcohol</h3>
+        <div>
+            <canvas id="alcoholChart"></canvas>
+        </div>
+    </div>
+    <hr>
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Hobby</h3>
+        <div>
+            <canvas id="hobbyChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Entertainment</h3>
+        <div>
+            <canvas id="entertainmentChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Culture</h3>
+        <div>
+            <canvas id="cultureChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Hygiene</h3>
+        <div>
+            <canvas id="hygieneChart"></canvas>
+        </div>
+    </div>
+    <hr>
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Rent</h3>
+        <div>
+            <canvas id="rentChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Transport</h3>
+        <div>
+            <canvas id="transportChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Commute</h3>
+        <div>
+            <canvas id="commuteChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Parking</h3>
+        <div>
+            <canvas id="parkingChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Gas</h3>
+        <div>
+            <canvas id="gasChart"></canvas>
+        </div>
+    </div>
+    <hr>
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Ohter</h3>
+        <div>
+            <canvas id="otherChart"></canvas>
+        </div>
+    </div>
+
+    <div class="card card-body shadow mb-4">
+        <h3 class="fw-bold">Savings</h3>
+        <div>
+            <canvas id="savingsChart"></canvas>
         </div>
     </div>
 {% endblock %}
@@ -23,7 +128,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    // label: 'Wydatki vs Przychody',
+                    label: 'Wydatki vs Przychody',
                     data: [{{ yearTotalIncomes }}, {{ yearTotalExpenses }}],
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.2)',
@@ -43,5 +148,365 @@
                 maintainAspectRatio: false,
             }
         });
+
+        const foodChart = document.getElementById('foodChart').getContext('2d');
+        const foodChartByMonths = new Chart(foodChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['food']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const eatingOutChart = document.getElementById('eatingOutChart').getContext('2d');
+        const eatingOutByMonths = new Chart(eatingOutChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['eating out']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const groceriesChart = document.getElementById('groceriesChart').getContext('2d');
+        const groceriesByMonths = new Chart(groceriesChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['groceries']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const alcoholChart = document.getElementById('alcoholChart').getContext('2d');
+        const alcoholByMonths = new Chart(alcoholChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['alcohol']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const hobbyChart = document.getElementById('hobbyChart').getContext('2d');
+        const hobbyByMonths = new Chart(hobbyChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['hobby']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const entertainmentChart = document.getElementById('entertainmentChart').getContext('2d');
+        const entertainmentByMonths = new Chart(entertainmentChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['entertainment']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const cultureChart = document.getElementById('cultureChart').getContext('2d');
+        const cultureByMonths = new Chart(cultureChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['culture']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const hygieneChart = document.getElementById('hygieneChart').getContext('2d');
+        const hygieneByMonths = new Chart(hygieneChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['hygiene']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const rentChart = document.getElementById('rentChart').getContext('2d');
+        const rentByMonths = new Chart(rentChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['rent']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const transportChart = document.getElementById('transportChart').getContext('2d');
+        const transportByMonths = new Chart(transportChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['transport']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const commuteChart = document.getElementById('commuteChart').getContext('2d');
+        const commuteByMonths = new Chart(commuteChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['commute']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const parkingChart = document.getElementById('parkingChart').getContext('2d');
+        const parkingByMonths = new Chart(parkingChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['parking']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const gasChart = document.getElementById('gasChart').getContext('2d');
+        const gasByMonths = new Chart(gasChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['gas']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const otherChart = document.getElementById('otherChart').getContext('2d');
+        const otherByMonths = new Chart(otherChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['other']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        const savingsChart = document.getElementById('savingsChart').getContext('2d');
+        const savingsByMonths = new Chart(savingsChart, {
+            type: 'bar',
+            data: {
+                labels:{{ months|json_encode()|raw }},
+                datasets: [
+                    {
+                        type: 'bar',
+                        label: 'expenses',
+                        data:{{ categoriesByMonths['savings']|json_encode() }},
+                        backgroundColor: '#C4D0FB'
+                    },
+                ]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+
+        {#const categories = ['food', 'eatingOutChart'];#}
+        {#categories.map((category) => {#}
+        {#    let a = `{{ categoriesByMonths['categoryVar']|json_encode() }}`.replace('categoryVar', category);#}
+        {#    console.log(a);#}
+        {#    let chartName = category + 'Chart';#}
+        {#    let canva = document.getElementById(chartName).getContext('2d');#}
+
+        {#    let chart = new Chart(canva, {#}
+        {#        type: 'bar',#}
+        {#        data: {#}
+        {#            labels:{{ months|json_encode()|raw }},#}
+        {#            datasets: [#}
+        {#                {#}
+        {#                    type: 'bar',#}
+        {#                    label: 'expenses',#}
+        {#                    data:{{ categoriesByMonths[cat]|json_encode() }},#}
+        {#                    backgroundColor: '#C4D0FB'#}
+        {#                },#}
+        {#            ]#}
+        {#        },#}
+        {#        options: {#}
+        {#            legend: {#}
+        {#                display: false#}
+        {#            },#}
+        {#            maintainAspectRatio: false,#}
+        {#        }#}
+        {#    });#}
+        {#    console.log(chart)#}
+        {#})#}
     </script>
 {% endblock %}
