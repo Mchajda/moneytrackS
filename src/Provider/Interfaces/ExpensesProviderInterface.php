@@ -10,9 +10,13 @@ interface ExpensesProviderInterface
 
     public function getExpensesForYearByUserId($user_id, $year, $amIPayer = true): array;
 
+    public function getSumOfExpensesForYearByUserId($user_id, $year, $amIPayer = true): float;
+
     public function getExpensesForMonthByUserId($user_id, $year, $month, $amIPayer): array;
 
     public function getIncomesForMonthByUserId($user_id, $year, $month): array;
+
+    public function getSumOfIncomesForYearByUserId($user_id, $year): float;
 
     public function getAllOrderedByMainCategoriesByUserId($user_id, $year, $month, $amIPayer): array;
 

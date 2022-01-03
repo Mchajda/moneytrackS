@@ -37,6 +37,12 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $this->repository->getExpensesForYearByUserId($user_id, $year, $amIPayer);
     }
 
+    public function getSumOfExpensesForYearByUserId($user_id, $year, $amIPayer = true): float
+    {
+        $expenses = $this->repository->getExpensesForYearByUserId($user_id, $year, $amIPayer);
+        return $this->countTransactionsValue($expenses);
+    }
+
     public function getExpensesForMonthByUserId($user_id, $year, $month, $amIPayer = true): array
     {
         return $this->repository->getExpensesForMonth($user_id, $year, $month, $amIPayer);
@@ -45,6 +51,12 @@ class ExpensesProvider implements ExpensesProviderInterface
     public function getIncomesForMonthByUserId($user_id, $year, $month): array
     {
         return $this->repository->getIncomesForMonth($user_id, $year, $month);
+    }
+
+    public function getSumOfIncomesForYearByUserId($user_id, $year): float
+    {
+        $incomes = $this->repository->getIncomesForYearByUserId($user_id, $year);
+        return $this->countTransactionsValue($incomes);
     }
 
     public function getAllOrderedByMainCategoriesByUserId($user_id, $year, $month, $amIPayer = true): array

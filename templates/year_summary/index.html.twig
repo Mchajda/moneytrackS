@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block title %}MONEYTRACK | {{ year }} SUMMARY{% endblock %}
+{% block stylesheets %}{{ parent() }}{% endblock %}
+{% block body %}
+    <div class="card card-body shadow">
+        <h3 class="fw-bold">{{ year }} Summary</h3>
+        <div>
+            <canvas id="expensesVsIncomesChart"></canvas>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const labels = ['Przychody', "Wydatki"];
+
+        const ctx = document.getElementById('expensesVsIncomesChart').getContext('2d');
+        const expensesVsIncomesChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    // label: 'Wydatki vs Przychody',
+                    data: [{{ yearTotalIncomes }}, {{ yearTotalExpenses }}],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                legend: {
+                    display: false
+                },
+                maintainAspectRatio: false,
+            }
+        });
+    </script>
+{% endblock %}
