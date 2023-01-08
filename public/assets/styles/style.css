@@ -1,55 +1,54 @@
 body {
-    font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
 .material-icons {
-    position: relative;
-    top: 5px;
-    left: 0;
-    font-size: 20px;
+  position: relative;
+  top: 5px;
+  left: 0;
+  font-size: 20px;
 }
 
 .alert-position {
-    position: fixed;
-    bottom: 5%;
-    right: 3%;
+  position: fixed;
+  bottom: 5%;
+  right: 3%;
 }
 
 .card {
-    border: 0;
+  border: 0;
 }
 
 .navbar {
-    border-bottom: 0;
+  border-bottom: 0;
 }
 
 .background-glass {
-    box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2);
-    background-color: rgba(255, 255, 255, .15);
-    backdrop-filter: blur(5px);
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
 }
 
 input[name="direction"],
 input[name="payer"] {
-    display: none;
+  display: none;
 }
 
 input[name="direction"]:checked + label.radio-button,
 input[name="payer"]:checked + label.radio-button {
-    background-color: #ddebff;
-    border: 2px solid #5097ff;
+  background-color: #ddebff;
+  border: 2px solid #5097ff;
 }
 
 input[name="direction"] + label.radio-button:hover,
 input[name="payer"] + label.radio-button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 label.radio-button {
-    width: 99%;
-    font-size: 16px;
-    border: 2px solid #ced4da;
-    border-radius: 5px;
-    text-align: center;
+  width: 99%;
+  font-size: 16px;
+  border: 2px solid #ced4da;
+  border-radius: 5px;
+  text-align: center;
 }
-

@@ -105,7 +105,6 @@ class ExpensesProvider implements ExpensesProviderInterface
             }
         }
 
-        dd($this_month_expenses);
         return $this_month_expenses;
     }
 
