@@ -84,6 +84,31 @@ class ExpensesProvider implements ExpensesProviderInterface
         return $this_month_expenses;
     }
 
+    public function getExpensesByMainCategoriesByUserIdList($user_id, $year, $month, $amIPayer = true): array
+    {
+        if ($month == 0) //zabezpieczenie w przypadku previous month grudzien-styczen
+        {
+            $month = 12;
+            $year -= 1;
+        }
+
+        $categories = $this->categoryProvider->getAllParentCategories();
+        $expenses = $this->getExpensesForMonthByUserId($user_id, $year, $month, $amIPayer);
+        $this_month_expenses = [];
+
+        foreach ($categories as $category) {
+            $this_month_expenses[$category->getCategoryName()] = [];
+            foreach ($expenses as $expense) {
+                if ($expense->getCategory() == $category || $expense->getCategory()->getParentCategory() == $category) {
+                    $this_month_expenses[$category->getCategoryName()][] = $expense;
+                }
+            }
+        }
+
+        dd($this_month_expenses);
+        return $this_month_expenses;
+    }
+
     public function getLastExpensesByUserId($user_id, $num): array
     {
         return $this->repository->getLastNumberOfTransactions($user_id, $num);

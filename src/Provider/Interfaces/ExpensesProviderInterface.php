@@ -20,6 +20,8 @@ interface ExpensesProviderInterface
 
     public function getAllOrderedByMainCategoriesByUserId($user_id, $year, $month, $amIPayer): array;
 
+    public function getExpensesByMainCategoriesByUserIdList($user_id, $year, $month, $amIPayer): array;
+
     public function getLastExpensesByUserId($user_id, $num): array;
 
     public function getMonthlyExpensesForYearByUser($user_id, $year, $amIPayer): array;
