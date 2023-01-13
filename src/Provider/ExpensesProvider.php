@@ -7,6 +7,8 @@ namespace App\Provider;
 use App\Provider\Interfaces\CategoryProviderInterface;
 use App\Provider\Interfaces\ExpensesProviderInterface;
 use App\Repository\ExpenseRepository;
+use App\Entity\Expense;
+use App\Entity\Category;
 use DateTime;
 
 class ExpensesProvider implements ExpensesProviderInterface
@@ -98,10 +100,20 @@ class ExpensesProvider implements ExpensesProviderInterface
 
         foreach ($categories as $category) {
             $this_month_expenses[$category->getCategoryName()] = [];
+            $thisMonthSumForCategory = 0;
+
             foreach ($expenses as $expense) {
                 if ($expense->getCategory() == $category || $expense->getCategory()->getParentCategory() == $category) {
                     $this_month_expenses[$category->getCategoryName()][] = $expense;
+                    $thisMonthSumForCategory += $expense->getAmount();
                 }
+            }
+            // adding fake expense to display total amout per category
+            if (sizeof($this_month_expenses[$category->getCategoryName()]) > 1) {
+                $fakeExpenseWithTotalSpendingsForCategory = new Expense();
+                $fakeExpenseWithTotalSpendingsForCategory->setAmount($thisMonthSumForCategory);
+                $fakeExpenseWithTotalSpendingsForCategory->setCategory(new Category());
+                $this_month_expenses[$category->getCategoryName()][] = $fakeExpenseWithTotalSpendingsForCategory;
             }
         }
 
